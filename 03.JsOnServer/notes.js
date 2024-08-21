@@ -9,7 +9,7 @@
 5. Node js is a c++ application with V8 embedded into it.
 6. ECMASCRIPT is a standard of javascript. Standard means that it will follow the rule how we can write the javascript code. 
         For example: 
-            1. If you write "===" which is strict checker, this is the standard which wrote in ecmascript.
+            1. If you write "===" which is strict checker, this is the standard which written in ecmascript.
             2. All browser's have their own javascript engine which is witten in different language, so they have to follow the standard of ecmascript to get the same result.
 7. V8 can embedded with any C++ program.
 8. V8 + Some C++ code (API's like connecting to database, importing images from devices and etc.) because V8 can't have these powers, that is the reason ryan dahl created nodejs.
