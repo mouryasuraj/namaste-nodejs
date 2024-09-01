@@ -20,7 +20,7 @@
             30
 2. require("./other")  //Require is used to import module or run that file. It can only execute that file but we cannot have access to their variables, functions, etc. by simple writing require.
 3. Modules protects their variables and functions from leaking by default. 
-4. If you want to access variables and function from one module to another module use below wayx.
+4. If you want to access variables and function from one module to another module use below way.
     for example:
         app.js:
                 const calculateSum = require("./calculateSum.js")  //Before require, you have to export it first
