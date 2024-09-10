@@ -11,4 +11,9 @@
 7. Serve and Cache static files like images, videos, etc.
 8. Handle SSL certificates
 
+
+
+
+1. Whenever we run nginx, it creates a folder
+
 */
