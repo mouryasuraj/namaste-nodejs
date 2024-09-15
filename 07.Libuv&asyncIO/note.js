@@ -34,6 +34,36 @@
             },5000)
         d. These task can take time
 
-
+3. Javascript offloads everyting to libuv
+4. Libuv is a multi-platform C library that provides support for asynchronous I/O based on event loops.
+--> https://libuv.org/
+    a. libuv is just some piece of code
+    b. Libuv is like middle layer between V8 engine and operating system
+    c. Nodejs is asynchrounous and v8 engine is synchronous
+    d. Nodejs can do asynchrounous I/O operations (Non- blocking I/O)
  
  */
+
+
+var a = 123456;
+var b = 3456;
+
+https.get("https://api.fbi.com", (res)=>{
+    console.log(res?.secret);
+})
+
+setTimeout(()=>{
+    console.log("setTimeout");
+},5000)
+
+fs.readFile("./gossip.text", "utf8", (data)=>{
+    console.log("file data", data);
+})
+
+function multiplyFn(x,y){
+    const result = a * b;
+    return result;
+}
+
+var c = multiplyFn(a,b)
+console.log(c);
