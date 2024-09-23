@@ -2,6 +2,8 @@ require("./other.js")  //Require is used to import module or run that file. It c
 
 const {calculateSum,x} = require("./calculateSum.js")  //Before require, you have to export it first
 
+y=20;
+
 let a = 10;
 let b = 20;
 console.log(calculateSum(a,b));

@@ -10,6 +10,7 @@ console.log(name);
 // Interesting thing about global object
 // In browser, lots of keyword refer to the global object like this, window, self, frames. So openjs foundation decided to give the common keyword to refer the global object in every where. "globalThis"
 
+
 console.log(globalThis);
 console.log(globalThis === global);
 
