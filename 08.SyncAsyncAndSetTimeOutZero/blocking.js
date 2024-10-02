@@ -25,4 +25,3 @@ function multiply(a,b){
 var c = multiply(a,b);
 
 console.log("Multiplication result is: ", c);
-
