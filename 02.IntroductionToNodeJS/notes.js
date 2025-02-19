@@ -18,7 +18,7 @@
 5. Chrome(V8 Engine), Firfox(Spider Monkey), Safari(JavascriptCore)
 6. Joyent is a software company which used nodejs and build some projects using it in initial stage of nodejs.
 7. First name of nodejs was webjs.
-8. In 2010, npm was build. NPM is a package manager for NodeJS. It is resitery where all the packages are build and stored.
+8. In 2010, npm was build. NPM is a package manager for NodeJS. It is registry where all the packages are build and stored.
 9. Initially, nodejs was build for only mac os and linux. Later in 2011, it was also build for windows and it was led by Joyent and Mircosoft.
 10. In 2012, Ryan left the nodejs project and then it was handled by Isaac Z who created npm.
 
@@ -96,3 +96,6 @@ Example: Node.js Kyu Useful Hai?
 Socho WhatsApp ya Messenger jese chat apps. Agar har user ka request server block kare, to chat slow ho jayega. Par Node.js multiple users ki real-time chatting handle kar sakta hai bina kisi delay ke, isiliye yeh itna powerful hai.
 
 */
+
+
+
