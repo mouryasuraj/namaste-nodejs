@@ -81,4 +81,29 @@
 
 
 
+// after Revision
+
+
+1. So, if you require or import a file, the first thing will happen that file will run and then rest of the code will execute
+2. Why we have to import the variables from other modules to use it?
+    It is because keep variable private, so that we can create same variable names and it will not conflict, example if there is not feature to export and import if you have to use any varialbe from other module then we can just require the file and use it but support variable "a" is present in other module so you can't create the same variable in current module so that's modules protect their variables and function from leaking by default.
+3. const {a:abc ,b,result} = require("./other")  //we can use aliasing of object, so here a renamed as abc, we can use abc instead of a
+4. Aliases:
+    1. Aliased (renaming varialble) are useful when we want to:
+        a. avoid naming conflict
+        b. Make variables names more readable
+        c. Reaname variable while exporting/importing
+5. In CommonJs Modules, we can rename variable using aliased like const {a:arr, b:brr} = require("./app.js")
+6. In ES Modules, we can rename variable using aliased like import {s as sum} from "./multiple.js"
+7. What is difference between commonjs and es modules
+
+
+Summary: When to Use Aliasing?
+Avoid conflicts - When two variables have the same name
+Improve readability - Rename fn to fullName
+Destructuring objects - const { a: abc } = obj;
+Renaming imports (require) - const { add: sum } = require("./math");
+Renaming ES6 imports - import { add as sum } from "./math.js";
+Function parameter destructuring - function({ name: userName })
+
 */
