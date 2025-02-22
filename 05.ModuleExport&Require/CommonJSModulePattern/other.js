@@ -1,1 +1,4 @@
-console.log("this should also run");
+let x = "1"
+
+
+module.exports = {x}

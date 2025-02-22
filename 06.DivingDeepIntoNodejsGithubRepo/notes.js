@@ -1,10 +1,9 @@
-// Diving deep into nodejs github 
-
+// Diving deep into nodejs github
 
 /*
 
 1. Whenever we create a function or wrap some piece of code then it becomes private, we cannot access those variables and functions which are present over there.
-2. Modules work the same way like javascript
+2. Modules work the same way like javascript function.
 3. All the codes which are present inside a module are wrapped into a function and then it executes. so we cannot access those variables and functions.
 4. The only way to access those variables and functions by module.exports(Common JS module) or export(ES Module)
 5. require("./path") --> ALl the code inside the require are wrapped into a function and this function is a special function called IIFE(Immediately Invoked Function Expression)
@@ -43,7 +42,7 @@
             iii node:module --> internal module
 2. Loading the module  --> (It depend on the type)
     a. File content is loaded according to the file type
-3. (Complile) --> fIt wraps those code inside IIFE 
+3. (Complile) --> It wraps those code inside IIFE 
 4. Evaluation --> module.exports happens
 5. Caching--->
     1. whenever required functions is called, it only calls for one time only, if nothing changed in that file then node js give that file from cahce for efficiency.
@@ -86,4 +85,45 @@ When using require("./path"), keep the following best practices in mind:
 1. 5 step of required mechanism
 2. 
 
+
+
+
+
+// After revision
+
+(function(module, require){
+    require("/path")
+    function x(){
+        console.log("Hello")
+    }
+    x()
+
+    module.exports = {x}
+})(module, require) // Nodejs pass params to IIFE before giving to V8 engine
+
+
+5 Mechanism
+1. Resolving the module:
+    --> Modules are searched in the following order:
+            1. Built-in modules (fs, http)
+            2. Local file modules (./sum.js)
+            3. node_modules directory
+                --> require.cache stores previously loaded modules.
+    --> First it will check whethere it is a ./localpath or json file or in build node method like node:util
+    --> According to that it process to next step
+2. Loading the module
+    --> First node will check in cache, if its already loaded then it will take from cache
+    --> File content is loaded according to the file type
+3. (Complie)Wrap into IIFE
+    --> 
+        (()=>{
+            let x = "1"
+            module.exports = {x}
+        })()
+4. Evaluation - module param passes by node
+        ((module)=>{
+            let x = "1"
+            module.exports = {x}
+        })(module)
+5. Caching
 */

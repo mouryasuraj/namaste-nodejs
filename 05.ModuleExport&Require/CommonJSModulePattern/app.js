@@ -8,3 +8,7 @@ let a = 10;
 let b = 20;
 console.log(calculateSum(a,b));
 console.log(x);
+
+(()=>{
+    console.log("this should also run");
+})()

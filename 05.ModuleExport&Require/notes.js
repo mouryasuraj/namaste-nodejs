@@ -86,8 +86,8 @@
 
 1. So, if you require or import a file, the first thing will happen that file will run and then rest of the code will execute
 2. Why we have to import the variables from other modules to use it?
-    It is because keep variable private, so that we can create same variable names and it will not conflict, example if there is not feature to export and import if you have to use any varialbe from other module then we can just require the file and use it but support variable "a" is present in other module so you can't create the same variable in current module so that's modules protect their variables and function from leaking by default.
-3. const {a:abc ,b,result} = require("./other")  //we can use aliasing of object, so here a renamed as abc, we can use abc instead of a
+    It is because keep variable private, so that we can create same variable names and it will not conflict, example if there is not a feature to export and import if you have to use any varialbe from other module then we can just require the file and use it but suppose variable "a" is present in other module so you can't create the same variable in current module so that modules protect their variables and function from leaking by default.
+3. const {a:abc ,b,result} = require("./other")  //we can use aliasing of object, so here "a" renamed as "abc", we can use abc instead of a
 4. Aliases:
     1. Aliased (renaming varialble) are useful when we want to:
         a. avoid naming conflict

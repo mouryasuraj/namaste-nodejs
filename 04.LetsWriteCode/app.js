@@ -1,6 +1,11 @@
+const a = require("./notes.js")
+const b = require("./notes.js")
 const name = "Namaste NodeJS";
 
-console.log(name);
+a()
+b()
+
+// console.log(name);
 
 // console.log(global) //Here in node js this refer to empty object {} and in browser this keyword refer to window object
 
@@ -11,7 +16,7 @@ console.log(name);
 // In browser, lots of keyword refer to the global object like this, window, self, frames. So openjs foundation decided to give the common keyword to refer the global object in every where. "globalThis"
 
 
-console.log(globalThis);
-console.log(globalThis === global);
+// console.log(globalThis);
+// console.log(globalThis === global);
 
 
