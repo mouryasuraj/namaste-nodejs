@@ -22,4 +22,52 @@
 15. What happens if a module is required multiple times?
 16. How does Node.js resolve a module when using require()?
 17. What is the purpose of the Module Wrapper Function in Node.js?
+
+//Libvu
+18. What is event-driven architecture in node.js?
+-->
+    Event-Driven Architecture (EDA) is a software design pattern where the flow of execution is controlled by events rather than a sequential order of code execution.
+
+    💡 How It Works?
+    1️⃣ Event Producer → Generates an event (e.g., button click, API request).
+    2️⃣ Event Broker (optional) → Manages and distributes events.
+    3️⃣ Event Consumer (Listener/Handler) → Reacts to the event and executes a task.
+
+    🔹 Example in Node.js (EventEmitter)
+
+    const EventEmitter = require('events');
+    const eventEmitter = new EventEmitter();
+
+    eventEmitter.on('orderPlaced', (orderId) => {
+        console.log(`Order ${orderId} has been placed.`);
+    });
+
+    eventEmitter.emit('orderPlaced', 12345);
+
+
+
+19. What is thread?
+--> 📌 Interview Answer: What is a Thread?
+        A thread is the smallest unit of execution within a process. It allows a program to run multiple tasks concurrently within the same memory space.
+
+        Single-threaded process: Executes one task at a time.
+        Multi-threaded process: Can run multiple tasks in parallel.
+        🔹 Example:
+        In JavaScript, Node.js is single-threaded by default, but it uses asynchronous, non-blocking I/O to handle multiple tasks efficiently. However, for CPU-intensive tasks, we can use Worker Threads to achieve multi-threading in Node.js.
+
+        const { Worker } = require('worker_threads');
+
+        const worker = new Worker('./worker.js');  // Runs worker.js in a separate thread
+
+        worker.on('message', (msg) => {
+            console.log("Worker Message:", msg);
+        });
+
+        Key Points:
+
+        1.Threads share memory with other threads of the same process.
+        2.Multi-threading is useful for CPU-intensive operations like image processing, data analysis, etc.
+        3.In Node.js, Worker Threads enable true multi-threading.
+
+
 */
