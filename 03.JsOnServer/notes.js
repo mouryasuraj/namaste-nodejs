@@ -45,7 +45,7 @@ Read about:
     a. V8 convert the javacript code into machine level code so that it can execute quickly
 6. Ecmacript: 
     a. Ecmacript is a standard which javacript and some other scripting languages follows.
-    b. every javscript engine follow ecmacript standard so that it should geenerate same result, it doesn't matter which language you are using to create javascript but you have to follow ecmascript standard to stay consisted and get the same result.\
+    b. every javscript engine follow ecmacript standard so that it should geenerate same result, it doesn't matter which language you are using to create javascript runtime environment but you have to follow ecmascript standard to stay consisted and get the same result.
 7. Why V8 is a c++ code:
     1. Computers understand only binary which is 0s and 1s.
     2. So, on the top of binary there is assembly code and on top it machine code and then high level language or code is there like c++ and on top it JAvscript is there
