@@ -68,6 +68,19 @@
         1.Threads share memory with other threads of the same process.
         2.Multi-threading is useful for CPU-intensive operations like image processing, data analysis, etc.
         3.In Node.js, Worker Threads enable true multi-threading.
+19. V8 Engine: 
+    1. How V8 Works behind the scene?
+    2. What is lexical Analysis?
+    3. What is tokens?
+    4. What is syntax analysis
+    5. What is Interpretter and Compiler?
+    6. What is Interpretter Language and Compiled Language?
+    7. How JIT works
+    8. How code is deoptimized
+    9. What is garbage collection
+    10. What is mark and sweep algorithm?
+    11. What is inline caching?
+    12. What is V8 architecture
 
 
 */
