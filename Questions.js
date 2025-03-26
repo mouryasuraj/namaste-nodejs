@@ -85,4 +85,7 @@
 20. Is Nodejs single threaded or multithreaded?
 --> It depends on the code, if code is not blocking the main thread then it will behave as single threaded but if it needs libuv means have a async code then it will become multithreaded
 
+21. What is Database?
+
+
 */
