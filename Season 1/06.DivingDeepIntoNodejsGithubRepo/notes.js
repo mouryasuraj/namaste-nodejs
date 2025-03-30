@@ -6,7 +6,7 @@
 2. Modules work the same way like javascript function.
 3. All the codes which are present inside a module are wrapped into a function and then it executes. so we cannot access those variables and functions.
 4. The only way to access those variables and functions by module.exports(Common JS module) or export(ES Module)
-5. require("./path") --> ALl the code inside the require are wrapped into a function and this function is a special function called IIFE(Immediately Invoked Function Expression)
+5. require("./path") --> All the code inside the require are wrapped into a function and this function is a special function called IIFE(Immediately Invoked Function Expression)
     ex:     (function(){
                 //ALl the code of a module wrapped and put it here
             })()

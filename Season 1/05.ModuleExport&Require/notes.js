@@ -4,7 +4,7 @@
 
 // Common JS Module Pattern
 
-1. Whenever you create a nodejs application, there should be a entry point to state the application like "app.js", "server.js" but what is if i want to run other files also, then we have to use require or import/export to run the code
+1. Whenever you create a nodejs application, there should be a entry point to state the application like "app.js", "server.js" but what if i want to run other files also, then we have to use require or import/export to run the code
     for ex: 
         app.js:
             require("./other.js")   //require is used to import a file and run that file and then below one
@@ -14,9 +14,10 @@
             console.log(a+b);
 
         other.js:
-            console.log("this should also run")
+            const a = 10;
+            console.log("this should also run ",a)
         log:
-            this should also run
+            this should also run 10
             30
 2. require("./other")  //Require is used to import module or run that file. It can only execute that file but we cannot have access to their variables, functions, etc. by simple writing require.
 3. Modules protects their variables and functions from leaking by default. 
@@ -92,7 +93,7 @@
     1. Aliased (renaming varialble) are useful when we want to:
         a. avoid naming conflict
         b. Make variables names more readable
-        c. Reaname variable while exporting/importing
+        c. Rename variable while exporting/importing
 5. In CommonJs Modules, we can rename variable using aliased like const {a:arr, b:brr} = require("./app.js")
 6. In ES Modules, we can rename variable using aliased like import {s as sum} from "./multiple.js"
 7. What is difference between commonjs and es modules

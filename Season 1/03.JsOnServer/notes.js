@@ -39,13 +39,13 @@ Read about:
 3. In the initial days, we were only able to run JS code in browser's only but because of nodejs we can run js outside of browser
 4. Node.js
     a. Node.js is a runtime of a javascript, it have V8 engine and some powerful api's and modules
-    b. Now we can create server's using javscrip code and website also using a single pragramming language which is JavaScript
+    b. Now we can create server's using javscript code and website also using a single pragramming language which is JavaScript
     c. Node js also have libuv, it is used to perform async task like I/O, file reading, API calling
 5. V8:
     a. V8 convert the javacript code into machine level code so that it can execute quickly
 6. Ecmacript: 
     a. Ecmacript is a standard which javacript and some other scripting languages follows.
-    b. every javscript engine follow ecmacript standard so that it should geenerate same result, it doesn't matter which language you are using to create javascript runtime environment but you have to follow ecmascript standard to stay consisted and get the same result.
+    b. every javscript engine follow ecmacript standard so that it should generate same result, it doesn't matter which language you are using to create javascript runtime environment but you have to follow ecmascript standard to stay consisted and get the same result.
 7. Why V8 is a c++ code:
     1. Computers understand only binary which is 0s and 1s.
     2. So, on the top of binary there is assembly code and on top it machine code and then high level language or code is there like c++ and on top it JAvscript is there
