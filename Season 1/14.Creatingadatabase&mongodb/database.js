@@ -1,7 +1,6 @@
 const { MongoClient } = require("mongodb");
 
-const URI =
-  "mongodb+srv://mouryasuraj:SurajMourya@learningmongodb.otxhr8q.mongodb.net/";
+const URI = "";
 const dbName = "nodejs";
 
 const client = new MongoClient(URI);
