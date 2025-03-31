@@ -1,20 +1,25 @@
-const crypto = require("crypto")
+const crypto = require("crypto");
+console.log("Starting");
 
-console.log("Hello");
+crypto.pbkdf2Sync("SurajMourya", "123123", 5000000, 50, "sha512");
+console.log("pbkdf2 sync called");
 
-//sync - block the call stack(main thread)   pbkdf2(Password Based Key Derivative Function 2)
-crypto.pbkdf2Sync("SurajMourya", "itaws", 500000, 10, 'sha512')
+setTimeout(() => {
+    console.log("Settimeout called");
+}, 0);
 
-//Asyns
-crypto.pbkdf2("SurajMourya", "itaws", 500000, 10, 'sha512', (err, key) =>{
-    console.log("Key generated",Buffer.from(key, 'utf8'))
-})
+crypto.pbkdf2("SurajMourya", "123123", 5000000, 50, "sha512", (err, key) => {
+  if (err) {
+    console.log("Errr getting while hashing password");
+    return;
+  }
+  console.log("Key is Generated successfully", key);
+});
 
-function multiply (a,b) {
-    const result = a * b;
+
+const add = (a,b)=>{
+    const result = a + b;
     return result;
 }
-
-const c = multiply(2,2)
-
-console.log("multiply",c);
+console.log("Add: ", add(2,3));
+console.log("Ending");

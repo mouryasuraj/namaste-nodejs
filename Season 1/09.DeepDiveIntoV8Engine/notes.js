@@ -29,7 +29,7 @@
             d. The job of Ingition Interpretter is to convert your AST into byte code and now this byte code finally executed
             e. The named of the compiler in V8 is Turbo Fan Compiler
             f. AST is given to Ignition Interpretter and if any code is reusable or need to optimized that code is called "HOT" and this is given to JIT compliation and it will convert that into optimized machine code and then it will execute
-            g. Garbage collection also running simultaneously. Garbage collectin is also known as Orinoco. Mark and Sweep algorith is used to removed the unused code.
+            g. Garbage collection also running simultaneously. Garbage collectin is also known as Orinoco. Mark and Sweep algorithm is used to removed the unused code.
 
             This whole process is known as JIT Compilation
 
@@ -73,13 +73,13 @@ Research:
         5. Now, AST is generated, will give to interpreter, which is the 2nd stage
 
     b. Interpreter:
-        1. JS is use both interpreter and compilter, compilation method in JS is known as JIT(Just In Time Compilation)
+        1. JS is use both interpreter and compiler, compilation method in JS is known as JIT(Just In Time Compilation)
         2. AST is pass to Interpreter(name of Google's V8 engine interpreter is "Ignition")
         3. Compiler("Turbofan")
         4. How Interpreter Works:
             1. AST given to Interpreter and it will execture the code line by line, it will convert that code into byte code and then execute
-            2. But if any function is invoked many times then V8 mark that function as "HOT" and that code is given to Turbofan(compiler), it will convert that code in optimised machine code and whenever that function called then it will quickly execute. Complier is also know as (optimization)
-            3. Sometimes are code also deoptimized, 
-                ex: sum(a,b), it turbofan make assumption that sum function will take number paramter, but when we pass string in the param then turbofan deoptimised and give to interpreter and interpreter convert it into byte code and execute it. 
+            2. But if any function is invoked many times then V8 mark that function as "HOT" and that code is given to Turbofan(compiler), it will convert that code in optimised machine code and whenever that function called then it will quickly execute. Complier is also known as (optimization)
+            3. Sometimes code also deoptimized, 
+                ex: sum(a,b), if turbofan make assumption that sum function will take number paramter, but when we pass string in the param then turbofan deoptimised and give to interpreter and interpreter convert it into byte code and execute it. 
 
  */

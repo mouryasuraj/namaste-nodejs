@@ -8,7 +8,9 @@ function multiply(a,b){
     return result;
 }
 
+console.log("Before Function");
 const c = multiply(a,b)
+console.log("After Function");
 
 console.log(`Multiplication of ${a} and ${b} is: ${c}`);
 

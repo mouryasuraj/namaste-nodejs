@@ -5,7 +5,7 @@
 1. Server can be both hardware and software
 2. Suppose server is a hardware and we need to access the some thing like files and some data from that hardware then how can we achieve that, we will run an application on that hardware that will handle all the coming request and then we can communicate to that server.
 3. EC2(Elastic Compute Cloud) - EC2 is an aws service. basically it is a server aws is provided
-4. IP - Internet Protocol - There is an address of everyy device called IP and its unique
+4. IP - Internet Protocol - There is an address of every device called IP and its unique
 
 5. Client-Server Architecture:
     a. socket - socket is an endpoint for communication betweeen two computers over a network. It allows devices to send and receives data in real-time.
@@ -140,5 +140,5 @@ Each port is identified by a port number (0–65535).
 How to check open ports:
     windows  - netstat an
     linux/ubuntu - netstat -tulnp
-
+    
 */
