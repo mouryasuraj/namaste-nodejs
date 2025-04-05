@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Tinder for Developers",
   "scripts": {
-    "start": "node src/errorHanding.js",
-    "dev": "nodemon src/errorHanding.js"
+    "start": "node src/pracMongoDB.js",
+    "dev": "nodemon src/pracMongoDB.js"
   },
   "keywords": [
     "Nodejs",
@@ -13,7 +13,9 @@
   "author": "Suraj Mourya",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
