@@ -105,7 +105,27 @@ ex:
     2. Multiple endpoints will be there, so we can't write same login in every endpoint or request handler, so here comes the picture of middlewares,
     3. app.use() --> we use this app.use function because it handles all the http methods(get, post, put, patch, delete, options) 
 
+//Error Handling
+    1. Always use try and catch to handleError
+    2. Use app.use("/") to handle Errors
+    --> 
+        ex:
+            app.get("/getuserdata",  (req,res)=>{
+                throw new Error("dfghjkl")
+                res.send("Get all the users data")
+            })
 
+            //Use this middleware to handle error if any error comes, because it will match any path
+            //Always keep this error handling middleware at the end
+            // The below is a wildcard path
+            app.use((err, req, res,next)=>{
+                if(err){
+                    console.log(err);
+                    res.status(500).send("Something went wrong")
+                }
+            })
+    3. In the middleware or route handler function has 4 parameters, if you pass 2 parameter, then express will mark first as request and second as respone, if pass 3 argument then 1-Request, 2-Respone, 3-next function, if pass 4 argument then 1-Error, 2-Request, 3-Respone, 4-next function
+    4. This is not the best way to handle erros, use try catch but keep this funciton at the end of the code because if any thing crash then it will send the error response
 
 
 
@@ -152,6 +172,10 @@ Questions:
             2. Excepts all http methods
             3. Mathches exact path only
             4. as it register route handlers, it ends with res.send()
+
+    4. Explain error handling in express with examples?
+
+
 
 
 */
