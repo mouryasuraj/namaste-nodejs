@@ -2,10 +2,9 @@
   "name": "devtinder",
   "version": "1.0.0",
   "description": "Tinder for Developers",
-  "main": "index.js",
   "scripts": {
-    "start": "node ./src/practice.js",
-    "dev": "nodemon ./src/practice.js"
+    "start": "node src/middlewareauth.js",
+    "dev": "nodemon src/middlewareauth.js"
   },
   "keywords": [
     "Nodejs",
