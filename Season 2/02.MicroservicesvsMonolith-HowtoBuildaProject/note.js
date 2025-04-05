@@ -54,7 +54,7 @@
     i. Fault isolation - only that project will crash if some part will crash
     j. Testing - Testing in microservies is little tough
     k. Maintenance - easy to maintain
-    l. Debugging - defficult to debug
+    l. Debugging - difficult to debug
 
 
 Questions 
