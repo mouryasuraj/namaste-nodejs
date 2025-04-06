@@ -6,22 +6,20 @@ const User = require("./models/user");
 const app = express();
 const PORT = process.env.PORT;
 
-app.use(express.json())
+app.use(express.json()) /// It will convert the JSON request body into Javacript Object
 
 app.post("/signup", async (req, res) => {
-  const reqBody = {
-    firstName: "Suraj",
-    lastName: "Mourya",
-    email: "suraj@dmeo.com",
-    password: "123123123",
-    age: 24,
-    gender: "Male",
-  };
+  const {body} = req;
 
-  const user = new User(reqBody);
+  const user = new User(body);
   try {
     await user.save();
-    res.send("User created successfully");
+    res.json({
+      message:"User created successfully",
+      userDetails:{
+        email:body.email
+      }
+    })
   } catch (error) {
     console.log("An error occured during saving the data to database", error);
     res.status(400).send("Something went wrong");

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Tinder for Developers",
   "scripts": {
-    "start": "node src/pracMongoDB.js",
-    "dev": "nodemon src/pracMongoDB.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "keywords": [
     "Nodejs",
