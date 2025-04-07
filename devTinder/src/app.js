@@ -6,30 +6,115 @@ const User = require("./models/user");
 const app = express();
 const PORT = process.env.PORT;
 
-app.use(express.json()) /// It will convert the JSON request body into Javacript Object
+app.use(express.json()); /// It will convert the JSON request body into Javacript Object
 
+// API - /signup
 app.post("/signup", async (req, res) => {
-  const {body} = req;
-
-  const user = new User(body);
+  const { body } = req;
   try {
+    const user = new User(body);
     await user.save();
     res.json({
-      message:"User created successfully",
-      userDetails:{
-        email:body.email
-      }
-    })
+      message: "User created successfully",
+      userDetails: {
+        email: body.email,
+      },
+    });
   } catch (error) {
     console.log("An error occured during saving the data to database", error);
+    //Email Already Exist
+    if(error.code===11000){
+      res.status(409).send("Email already exists")
+      return
+    }
     res.status(400).send("Something went wrong");
+  }
+});
+
+// Get one user API - /user
+app.get("/user", async (req, res) => {
+  const email = req.query.email;
+  try {
+    const users = await User.findOne({ email }).sort({ _id: -1 }); //if you pass id:-1 then it will give the latest created one and if id:1 then the old one
+    if (!users) {
+      res.status(404).send(`User not found with email: ${email}`);
+      return;
+    }
+    res.json(users);
+  } catch (error) {
+    console.log("an error occured during getting all the users", error);
+    res.status(500).send("Someting went wrong");
+  }
+});
+
+// Feed API - /feed
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    if (users.length === 0) {
+      res.send(`Feed is empty`);
+      return;
+    }
+    res.json(users);
+  } catch (error) {
+    console.log("an error occured during getting all the users", error);
+    res.status(500).send("Someting went wrong");
+  }
+});
+
+//Delete User API - /deleteUser
+app.delete("/deleteUser", async (req, res) => {
+  const userId = req.query.userId;
+  if (!userId) {
+    res.status(400).send("User id not found");
+    return;
+  }
+  try {
+    // await User.findByIdAndDelete(userId)
+    await User.findByIdAndDelete({ _id: userId }); // The above one is the shorthand of this method
+    res.send("User deleted successfully");
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).send("Something went wrong");
+  }
+});
+
+//UPdate User API - /updateUser
+app.patch("/updateUser", async (req, res) => {
+  const userId = req.query.userId;
+  if (!userId) {
+    res.status(400).send("Id is required");
+    return;
+  }
+  const dataToUpdate = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(userId, dataToUpdate, {
+      // returnDocument:"before",
+      returnOriginal: false,
+      runValidators:true // Use to validate 
+    });
+    if (!user) {
+      res.status(404).send("Id not found");
+      return;
+    }
+    res.json({
+      message: "User Updated Successfully",
+      updatedData: user,
+    });
+  } catch (error) {
+    console.log("error", error);
+    res.status(400).send("something went wrong");
   }
 });
 
 //Connect DB
 connectDB()
-  .then(() => {
+  .then(async(res) => {
     console.log("Database connected successfully");
+    const indxes = await User.collection.indexes()
+    console.log(indxes);
+    
+
     app.listen(PORT, () => {
       console.log("Server is running on port: ", PORT);
     });
