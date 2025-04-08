@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
+
 const { Schema } = mongoose;
 
 //Define schema
@@ -13,6 +15,7 @@ const userSchema = new Schema(
       trim: true,
       // enum:["Suraj", "Mourya"],
       match: /\d/,
+     
     },
     lastName: {
       type: String,
@@ -26,10 +29,20 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      validate(value){
+        if(!validator.isEmail(value)){
+          throw new Error("Invalid email address")
+        }
+      }
     },
     password: {
       type: String,
       required: true,
+      validate(value){
+        if(!validator.isStrongPassword(value)){
+          throw new Error("Your password is invalid")
+        }
+      }
     },
     age: {
       type: Number,
@@ -48,6 +61,11 @@ const userSchema = new Schema(
     },
     photoUrl: {
       type: String,
+      validate(value){
+        if(!validator.isURL(value)){
+          throw new Error("Invalid URL")
+        }
+      }
     },
     about: {
       type: String,
@@ -66,4 +84,4 @@ const userSchema = new Schema(
 // Create model
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+module.exports = User;  

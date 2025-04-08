@@ -23,9 +23,9 @@ app.post("/signup", async (req, res) => {
   } catch (error) {
     console.log("An error occured during saving the data to database", error);
     //Email Already Exist
-    if(error.code===11000){
-      res.status(409).send("Email already exists")
-      return
+    if (error.code === 11000) {
+      res.status(409).send("Email already exists");
+      return;
     }
     res.status(400).send("Something went wrong");
   }
@@ -82,16 +82,22 @@ app.delete("/deleteUser", async (req, res) => {
 //UPdate User API - /updateUser
 app.patch("/updateUser", async (req, res) => {
   const userId = req.query.userId;
-  if (!userId) {
-    res.status(400).send("Id is required");
-    return;
-  }
   const dataToUpdate = req.body;
+  const allowedUpdates = ["firstName","lastName","gender","about","skills"]
+  const isUpdateAllowed = Object.keys(dataToUpdate).every((field)=> allowedUpdates.includes(field))
+
   try {
+    if (!userId) {
+      throw new Error("Id is required")
+    }else if(!isUpdateAllowed){
+      throw new Error("Update is not allowed")
+    }else if(req.body.skills && req.body.skills.length>4){
+      throw new Error("Skill length exceeds 4")
+    }
     const user = await User.findByIdAndUpdate(userId, dataToUpdate, {
       // returnDocument:"before",
       returnOriginal: false,
-      runValidators:true // Use to validate 
+      runValidators: true, // Use to validate
     });
     if (!user) {
       res.status(404).send("Id not found");
@@ -103,17 +109,16 @@ app.patch("/updateUser", async (req, res) => {
     });
   } catch (error) {
     console.log("error", error);
-    res.status(400).send("something went wrong");
+    res.status(400).send("something went wrong " + error);
   }
 });
 
 //Connect DB
 connectDB()
-  .then(async(res) => {
+  .then(async (res) => {
     console.log("Database connected successfully");
-    const indxes = await User.collection.indexes()
+    const indxes = await User.collection.indexes();
     console.log(indxes);
-    
 
     app.listen(PORT, () => {
       console.log("Server is running on port: ", PORT);
