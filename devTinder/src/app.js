@@ -1,7 +1,9 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 const connectDB = require("./config/database");
 const User = require("./models/user");
+const { validateSignUpData, validateLoginData } = require("./utils/validation");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -10,14 +12,31 @@ app.use(express.json()); /// It will convert the JSON request body into Javacrip
 
 // API - /signup
 app.post("/signup", async (req, res) => {
-  const { body } = req;
   try {
-    const user = new User(body);
+    //Validate the request body
+    validateSignUpData(req);
+
+    const { firstName, lastName, email, password, age, gender, photoUrl } =
+      req.body;
+
+    //Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(hashedPassword);
+
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      age,
+      gender,
+      photoUrl,
+    });
     await user.save();
     res.json({
       message: "User created successfully",
       userDetails: {
-        email: body.email,
+        email: email,
       },
     });
   } catch (error) {
@@ -27,7 +46,30 @@ app.post("/signup", async (req, res) => {
       res.status(409).send("Email already exists");
       return;
     }
-    res.status(400).send("Something went wrong");
+    res.status(400).send("Error: " + error.message);
+  }
+});
+
+// API - /login
+app.post("/login", async (req, res) => {
+  try {
+    validateLoginData(req);
+
+    const { email, password } = req.body;
+    const user = await User.findOne({email});
+    if (!user) {
+      throw new Error("Invalid Credentials");
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid Credentials");
+    }else{
+      res.send("logged in successfully.....")
+    }
+  } catch (error) {
+    console.log("Error", error.message);
+    res.status(500).send("Something went wrong " + error.message);
   }
 });
 
@@ -83,16 +125,18 @@ app.delete("/deleteUser", async (req, res) => {
 app.patch("/updateUser", async (req, res) => {
   const userId = req.query.userId;
   const dataToUpdate = req.body;
-  const allowedUpdates = ["firstName","lastName","gender","about","skills"]
-  const isUpdateAllowed = Object.keys(dataToUpdate).every((field)=> allowedUpdates.includes(field))
+  const allowedUpdates = ["firstName", "lastName", "gender", "about", "skills"];
+  const isUpdateAllowed = Object.keys(dataToUpdate).every((field) =>
+    allowedUpdates.includes(field)
+  );
 
   try {
     if (!userId) {
-      throw new Error("Id is required")
-    }else if(!isUpdateAllowed){
-      throw new Error("Update is not allowed")
-    }else if(req.body.skills && req.body.skills.length>4){
-      throw new Error("Skill length exceeds 4")
+      throw new Error("Id is required");
+    } else if (!isUpdateAllowed) {
+      throw new Error("Update is not allowed");
+    } else if (req.body.skills && req.body.skills.length > 4) {
+      throw new Error("Skill length exceeds 4");
     }
     const user = await User.findByIdAndUpdate(userId, dataToUpdate, {
       // returnDocument:"before",

@@ -14,7 +14,6 @@ const userSchema = new Schema(
       maxLength: 10,
       trim: true,
       // enum:["Suraj", "Mourya"],
-      match: /\d/,
      
     },
     lastName: {
@@ -47,7 +46,7 @@ const userSchema = new Schema(
     age: {
       type: Number,
       min: 18,
-      max: 45,
+      max: 50,
       default: 18,
     },
     gender: {

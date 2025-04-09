@@ -41,8 +41,8 @@ ex: validate(value){
             }
         }
 5. In case of update, if you add some validation after creating few document then on those docuemnt this validation will not work by default. First you have to enable it where the endpoint declaration is defined, we have to add an options in findByIdandUpdate(id, dataToUpdate, {runValidator:true})
-
-
+6. Always sanitize your data, add validation at schema and api level
+7. Install validator library for validation
 
 
 Imp Points:
@@ -66,4 +66,6 @@ Questions:
 //HW
 1. Explore schemaType documentation
 2. Improve DB Schema by adding validation
+3. Learn How to write regex
+
 */
