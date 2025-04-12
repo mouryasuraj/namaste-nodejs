@@ -46,9 +46,23 @@
 
 
 //some mongoose methods
+1. We can create methods in userScheman and put the logic of creating token in that
+2. ex: 
+    // Always assigned a normal function. Do not user arrow function because we are going to use "this" keyword inside this and "this" is undefined in arrow function
 
-
-
+    userSchema.methods.getJwt = async function()=>{
+        const user = this;
+            const userPayload = {
+            email: user.email,
+            gender: user.gender,
+            age: user.age,
+            photoUrl: user.photoUrl,
+        }
+        const token = jwt.sign(userPayload, process.env.SECRETKEY, {expiresIn:"1d"})
+        return token
+    }
+3. We can call it as helper function
+4. We can create helper function if that logic is related to that schema
 
 
 

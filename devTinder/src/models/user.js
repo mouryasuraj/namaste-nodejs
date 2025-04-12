@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const { Schema } = mongoose;
 
@@ -79,6 +81,26 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+//Create methods
+userSchema.methods.getJWT = async function(){
+  const user = this;  //Do not user arrow function as "this" behaves different in arrow functions
+  const userPayload = {
+    email: user.email,
+    gender: user.gender,
+    age: user.age,
+    photoUrl: user.photoUrl,
+  };
+
+  const token = jwt.sign(userPayload, process.env.SECRETKEY, {expiresIn:'1h'})
+  return token;
+}
+
+userSchema.methods.comparePassword = async function(password){
+  const user = this
+  return await bcrypt.compare(password, user.password)
+}
+
 
 // Create model
 const User = mongoose.model("User", userSchema);
