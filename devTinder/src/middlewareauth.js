@@ -1,11 +1,11 @@
 const express = require("express");
-const { authAdmin, authUser } = require("./middlewares/auth");
+const { authAdmin, userAuth } = require("./middlewares/auth");
 
 const app = express();
 
 app.use("/admin", authAdmin);
 
-app.get("/user/getalluser", authUser, (req,res)=>{
+app.get("/user/getalluser", userAuth, (req,res)=>{
     res.send("Get all the users data")
 })
 

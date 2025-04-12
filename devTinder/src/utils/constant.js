@@ -1,5 +1,5 @@
 const allowedUserFieldUpdate = ["firstName","lastName","gender","photoUrl"]
-const allowedSignUpFields = ["firstName","lastName","email","password","age","gender","photoUrl"]
+const allowedSignUpFields = ["firstName","lastName","email","password","age","gender","photoUrl", "about"]
 const allowedGenders = ["Male","Female","Others"]
 const allowedLoginFields = ["email", "password"]
 

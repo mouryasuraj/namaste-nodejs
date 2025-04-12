@@ -1,14 +1,19 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const connectDB = require("./config/database");
 const User = require("./models/user");
 const { validateSignUpData, validateLoginData } = require("./utils/validation");
+const { userAuth } = require("./middlewares/auth");
 
 const app = express();
 const PORT = process.env.PORT;
+const SECRETKEY = process.env.SECRETKEY;
 
 app.use(express.json()); /// It will convert the JSON request body into Javacript Object
+app.use(cookieParser());
 
 // API - /signup
 app.post("/signup", async (req, res) => {
@@ -56,7 +61,7 @@ app.post("/login", async (req, res) => {
     validateLoginData(req);
 
     const { email, password } = req.body;
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (!user) {
       throw new Error("Invalid Credentials");
     }
@@ -64,12 +69,43 @@ app.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new Error("Invalid Credentials");
-    }else{
-      res.send("logged in successfully.....")
+    } else {
+      const userPayload = {
+        email: user.email,
+        gender: user.gender,
+        age: user.age,
+        photoUrl: user.photoUrl,
+      };
+      const token = jwt.sign(userPayload, SECRETKEY, { expiresIn: "2 days" });
+      res.cookie("token", token, { httpOnly: true, secure: false, expires:new Date(Date.now()+300000) });
+      res.send("logged in successfully.....");
     }
   } catch (error) {
     console.log("Error", error.message);
     res.status(500).send("Something went wrong " + error.message);
+  }
+});
+
+// API - /profile
+app.get("/profile", userAuth, (req, res) => {
+  //const cookie = req.cookies // if you want to access cookie you have to parse that using cookie-parser
+
+  //This we can handle cookies without using cookie-parser, but cookie-parser is recommendable to user
+  // const cookieHeader = req.headers.cookie  //THis is the other way to get the cookie
+  // const cookies = {}
+  // if(cookieHeader){
+  //   cookieHeader.split(";").forEach(element => {
+  //     const [name, value] = element.trim().split("=")
+  //     cookies[name] = decodeURIComponent(value)
+  //   });
+  // }
+  // console.log(cookies);
+
+  try {
+    const user = req.user;
+    res.json(user);
+  } catch (error) {
+    res.status(500).status(403).send("Something went wrong");
   }
 });
 
@@ -90,7 +126,7 @@ app.get("/user", async (req, res) => {
 });
 
 // Feed API - /feed
-app.get("/feed", async (req, res) => {
+app.get("/feed", userAuth, async (req, res) => {
   try {
     const users = await User.find({});
     if (users.length === 0) {
