@@ -2,6 +2,7 @@ const {
   allowedGenders,
   allowedSignUpFields,
   allowedLoginFields,
+  allowedResetPasswordFields,
 } = require("./constant.js");
 const validator = require("validator");
 
@@ -102,4 +103,47 @@ const validateLoginData = (req) => {
   }
 };
 
-module.exports = { validateSignUpData, validateLoginData };
+const validateResetPassword = (req) => {
+  if (!req.body) throw new Error("Request body is missing");
+  const body = req.body
+  
+
+  const fields = Object.keys(body);
+
+  const invalidFields = fields.filter(
+    (field) => !allowedResetPasswordFields.includes(field)
+  );
+  if (invalidFields.length > 0) {
+    throw new Error(`Invalid Fields : ${invalidFields.join(", ")}`);
+  }
+
+  const isMissingFields = allowedResetPasswordFields.filter(
+    (field) => !fields.includes(field)
+  );
+  if (isMissingFields.length > 0)
+    throw new Error(`Missing fields : ${isMissingFields.join(", ")}`);
+
+  const {currentPassword, newPassword, confirmPassword} = body
+
+  const validation = [
+    { valid: currentPassword, message: "currentPassword should not be empty" },
+    { valid: newPassword, message: "newPassword should not be empty" },
+    { valid: confirmPassword, message: "confirmPassword should not be empty" },
+    { valid: validator.isStrongPassword(newPassword, {minLength:8, minLowercase:1,minNumbers:1, minSymbols:1,minUppercase:1}), message: "Password is invalid" },
+    { valid: newPassword===confirmPassword, message: "new and confirm password is not matched"},
+  ];
+
+  for(const check of validation){
+    if(!check.valid){
+      throw new Error(check.message)
+    }
+  }
+
+
+};
+
+module.exports = {
+  validateSignUpData,
+  validateLoginData,
+  validateResetPassword,
+};
