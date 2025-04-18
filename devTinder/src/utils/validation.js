@@ -3,6 +3,7 @@ const {
   allowedSignUpFields,
   allowedLoginFields,
   allowedResetPasswordFields,
+  allowedSendStatusType,
 } = require("./constant.js");
 const validator = require("validator");
 
@@ -105,8 +106,7 @@ const validateLoginData = (req) => {
 
 const validateResetPassword = (req) => {
   if (!req.body) throw new Error("Request body is missing");
-  const body = req.body
-  
+  const body = req.body;
 
   const fields = Object.keys(body);
 
@@ -123,27 +123,53 @@ const validateResetPassword = (req) => {
   if (isMissingFields.length > 0)
     throw new Error(`Missing fields : ${isMissingFields.join(", ")}`);
 
-  const {currentPassword, newPassword, confirmPassword} = body
+  const { currentPassword, newPassword, confirmPassword } = body;
 
   const validation = [
     { valid: currentPassword, message: "currentPassword should not be empty" },
     { valid: newPassword, message: "newPassword should not be empty" },
     { valid: confirmPassword, message: "confirmPassword should not be empty" },
-    { valid: validator.isStrongPassword(newPassword, {minLength:8, minLowercase:1,minNumbers:1, minSymbols:1,minUppercase:1}), message: "Password is invalid" },
-    { valid: newPassword===confirmPassword, message: "new and confirm password is not matched"},
+    {
+      valid: validator.isStrongPassword(newPassword, {
+        minLength: 8,
+        minLowercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+        minUppercase: 1,
+      }),
+      message: "Password is invalid",
+    },
+    {
+      valid: newPassword === confirmPassword,
+      message: "new and confirm password is not matched",
+    },
   ];
 
-  for(const check of validation){
-    if(!check.valid){
-      throw new Error(check.message)
+  for (const check of validation) {
+    if (!check.valid) {
+      throw new Error(check.message);
     }
   }
+};
 
-
+const validateSendConnectionData = (req) => {
+  const toUserId = req.params.toUserId;
+  const status = req.params.status;
+  if (!toUserId || !status)
+    throw new Error(
+      `${!toUserId ? "toUserId" : "status"} params is not present`
+    );
+  
+    const isStatusAllowed = allowedSendStatusType.includes(status)
+    if(!isStatusAllowed){
+      throw new Error(`Invalid status type : ${status}`)
+    }
+  
 };
 
 module.exports = {
   validateSignUpData,
   validateLoginData,
   validateResetPassword,
+  validateSendConnectionData,
 };

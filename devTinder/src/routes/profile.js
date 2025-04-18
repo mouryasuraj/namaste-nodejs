@@ -97,7 +97,7 @@ profileRouter.patch("/resetpassword", userAuth, async (req, res) => {
         throw new Error("Current password is not correct")
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const user = await User.findByIdAndUpdate(_id, {
+    await User.findByIdAndUpdate(_id, {
       password: hashedPassword,
     });
     res.json({ message: "Your password is updated successfully", id: _id });

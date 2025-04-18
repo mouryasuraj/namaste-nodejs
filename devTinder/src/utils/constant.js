@@ -3,6 +3,7 @@ const allowedSignUpFields = ["firstName","lastName","email","password","age","ge
 const allowedGenders = ["Male","Female","Others"]
 const allowedLoginFields = ["email", "password"]
 const allowedResetPasswordFields = ["currentPassword", "newPassword", "confirmPassword"]
+const allowedSendStatusType = ["interested", "ignored"]
 
 
-module.exports = {allowedGenders, allowedSignUpFields, allowedUserFieldUpdate, allowedLoginFields, allowedResetPasswordFields}
+module.exports = {allowedGenders, allowedSignUpFields, allowedUserFieldUpdate, allowedLoginFields, allowedResetPasswordFields, allowedSendStatusType}

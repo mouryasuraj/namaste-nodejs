@@ -1,11 +1,12 @@
-const express = require('express');
-const bcrypt = require('bcrypt')
-const { validateSignUpData, validateLoginData } = require('../utils/validation');
-const User = require('../models/user');
+const express = require("express");
+const bcrypt = require("bcrypt");
+const {
+  validateSignUpData,
+  validateLoginData,
+} = require("../utils/validation");
+const User = require("../models/user");
 
-
-const authRouter = express.Router()
-
+const authRouter = express.Router();
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -46,7 +47,6 @@ authRouter.post("/signup", async (req, res) => {
   }
 });
 
-
 authRouter.post("/login", async (req, res) => {
   try {
     validateLoginData(req);
@@ -56,12 +56,16 @@ authRouter.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("Invalid Credentials");
     }
-    const isPasswordValid = await user.comparePassword(password)
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
       throw new Error("Invalid Credentials");
     } else {
-      const token = await user.getJWT()
-      res.cookie("token", token, { httpOnly: true, secure: false, expires:new Date(Date.now()+300000)});
+      const token = await user.getJWT();
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        expires: new Date(Date.now() + 3000000),
+      });
       res.send("logged in successfully.....");
     }
   } catch (error) {
@@ -70,17 +74,16 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
+authRouter.post("/logout", (req, res) => {
+  try {
+    // res.cookie("token", null, {expires:new Date(Date.now())}) //we can also do this, it will set token to null and expires immediately
+    // res.send("Logged out successfully")
 
-authRouter.post("/logout",(req,res)=>{
-    try {
-        // res.cookie("token", null, {expires:new Date(Date.now())}) //we can also do this, it will set token to null and expires immediately
-        // res.send("Logged out successfully")
+    res.clearCookie("token").status(200).send("Logged out successfully");
+  } catch (error) {
+    console.log("Error: " + error);
+    res.status(400).send("Somehting went wrong " + error.message);
+  }
+});
 
-        res.clearCookie("token").status(200).send("Logged out successfully")
-    } catch (error) {
-        console.log("Error: "+error)
-        res.status(400).send("Somehting went wrong " + error.message)
-    }
-})
-
-module.exports = authRouter
+module.exports = authRouter;
