@@ -51,4 +51,35 @@ requestRouter.post("/send/:status/:toUserId", userAuth, async (req, res) => {
   }
 });
 
+
+requestRouter.post("/review/:status/:userId", userAuth, async (req,res) =>{
+
+  try {
+    validateReviewRequestBody(req)
+
+    const {userId} = req.params
+    const {fromUserId} = req.user
+
+    //Check requested user is correct or not
+    const requestedUser = await User.findById(userId)
+    if(!requestedUser){
+      return res.status(404).json({message:"User not found"})
+    }
+
+    // Check if already connection accepted
+    const isConnectionAlready = await ConnectionRequest.findOne({
+      $and: [
+        
+      ]
+    })
+
+
+  } catch (error) {
+    console.log("Something went wrong: ", error)
+    res.status(404).json({message:error.message})
+  }
+
+})
+
+
 module.exports = requestRouter;

@@ -4,6 +4,7 @@ const {
   allowedLoginFields,
   allowedResetPasswordFields,
   allowedSendStatusType,
+  allowedReviewStatusType,
 } = require("./constant.js");
 const validator = require("validator");
 
@@ -167,9 +168,23 @@ const validateSendConnectionData = (req) => {
   
 };
 
+
+const validateReviewRequestBody = (req) =>{
+
+  const {status} = req.params
+  const isStatusAllowed = allowedReviewStatusType.includes(status)
+  if(!isStatusAllowed){
+    throw new Error(`Invalid status type : ${status}`)
+  }
+
+
+}
+
+
 module.exports = {
   validateSignUpData,
   validateLoginData,
   validateResetPassword,
   validateSendConnectionData,
+  validateReviewRequestBody
 };
