@@ -2,7 +2,7 @@ const { userAuth } = require("../middlewares/auth.js");
 
 const express = require("express");
 const User = require("../models/user.js");
-const { validateSendConnectionData } = require("../utils/validation.js");
+const { validateSendConnectionData, validateReviewRequestBody } = require("../utils/validation.js");
 const ConnectionRequest = require("../models/connectionRequest.js");
 
 const requestRouter = express.Router();
@@ -52,34 +52,35 @@ requestRouter.post("/send/:status/:toUserId", userAuth, async (req, res) => {
 });
 
 
-requestRouter.post("/review/:status/:userId", userAuth, async (req,res) =>{
-
+requestRouter.post("/review/:status/:requestId", userAuth, async (req,res)=>{
   try {
     validateReviewRequestBody(req)
+    const loggedInUser = req.user
+    const {status, requestId} = req.params
 
-    const {userId} = req.params
-    const {fromUserId} = req.user
+    const isConnectionExist =await ConnectionRequest.findOne({
+      _id:requestId,
+      toUserId:loggedInUser._id,
+      status:"interested"
+    })
 
-    //Check requested user is correct or not
-    const requestedUser = await User.findById(userId)
-    if(!requestedUser){
-      return res.status(404).json({message:"User not found"})
+    if(!isConnectionExist){
+      return res.status(404).json({message:"Connection request not found"})
     }
 
-    // Check if already connection accepted
-    const isConnectionAlready = await ConnectionRequest.findOne({
-      $and: [
-        
-      ]
-    })
+    isConnectionExist.status = status
+    const acceptedUser = await isConnectionExist.save()
+
+    res.json({message:"Connection request "+status+" successfully", acceptedUser})
 
 
   } catch (error) {
-    console.log("Something went wrong: ", error)
-    res.status(404).json({message:error.message})
+      console.log("Something went wrong: ", error)
+      res.status(400).json({message:"Something went wrong"})
   }
-
 })
+
+
 
 
 module.exports = requestRouter;
