@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const { userAuth } = require("../middlewares/auth");
+const ConnectionRequest = require("../models/connectionRequest");
 
 const userRouter = express.Router();
 
@@ -36,7 +37,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
 });
 
 //Delete User API - /deleteUser
-userRouter.delete("/deleteUser", async (req, res) => {
+userRouter.delete("/deleteUser", userAuth, async (req, res) => {
   const userId = req.query.userId;
   if (!userId) {
     res.status(400).send("User id not found");
@@ -49,6 +50,66 @@ userRouter.delete("/deleteUser", async (req, res) => {
   } catch (error) {
     console.log("error", error);
     res.status(500).send("Something went wrong");
+  }
+});
+
+//Get all Connections
+userRouter.get("/connections", userAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+
+    const allAcceptedConnections = await ConnectionRequest.find({
+      $or: [
+        { toUserId: loggedInUser._id, status: "accepted" },
+        { fromUserId: loggedInUser._id, status: "accepted" },
+      ],
+    })
+      .populate("fromUserId", "firstName lastName age about photoUrl")
+      .populate("toUserId", "firstName lastName age about photoUrl");
+
+
+
+    if (allAcceptedConnections.length === 0) {
+      res.json({ message: "No Connection made" });
+    } else {
+      const filteredData = allAcceptedConnections.map(data =>{
+        
+        if(data.fromUserId._id.toString()===loggedInUser._id.toString()){
+          return data.toUserId
+        }else{
+          return data.fromUserId
+        }
+      })
+      res.json({
+        message: "Accepted Connections Request",
+        data: filteredData,
+      });
+    }
+  } catch (error) {
+    console.log("Something went wrong:", error.message);
+    res.status(400).json({ message: "Something went wrong" });
+  }
+});
+
+//Get all pending connection request
+userRouter.get("/requests", userAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+
+    const allConnectionRequests = await ConnectionRequest.find({
+      toUserId: loggedInUser._id,
+      status: "interested",
+    }).populate("fromUserId", "firstName lastName age gender about skills");
+    // }).populate("fromUserId", ["firstName","lastName","age","gender","about","skills"])
+
+    if (allConnectionRequests.length === 0) {
+      res.json({ message: "No request is found" });
+    } else {
+      res.json({ message: "Connections", data: allConnectionRequests });
+    }
+  } catch (error) {
+    console.log("Something went wrong: ", error.message);
+    res.status(400).json({ message: "Something went wrong" });
   }
 });
 
