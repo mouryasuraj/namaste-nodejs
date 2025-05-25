@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const connectDB = require("./config/database");
 const User = require("./models/user");
-const { validateSignUpData, validateLoginData } = require("./utils/validation");
-const { userAuth } = require("./middlewares/auth");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const userRouter = require("./routes/user");

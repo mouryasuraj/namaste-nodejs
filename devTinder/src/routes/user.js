@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
+const { userPublicData } = require("../utils/constant");
 
 const userRouter = express.Router();
 
@@ -24,15 +25,39 @@ userRouter.get("/", async (req, res) => {
 // Feed API - /feed
 userRouter.get("/feed", userAuth, async (req, res) => {
   try {
-    const users = await User.find({});
+    const loggedInUser = req.user;
+
+    //Getting all the user which have connections
+    const allConnectionReq = await ConnectionRequest.find({
+      $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
+    });
+
+    const hideFromUsersFeed = new Set();
+
+    allConnectionReq.forEach((req) => {
+      hideFromUsersFeed.add(req.fromUserId.toString());
+      hideFromUsersFeed.add(req.toUserId.toString());
+    });
+
+    // Get all users except loggedin user and which have connections
+    const users = await User.find({
+      $and: [
+        {
+          _id: { $nin: Array.from(hideFromUsersFeed) },
+        },
+        {
+          _id: { $ne: loggedInUser._id },
+        },
+      ],
+    }).select(userPublicData);
+
     if (users.length === 0) {
-      res.send(`Feed is empty`);
-      return;
+      return res.json({ message: "No user found" });
     }
-    res.json(users);
+    res.json({ message: "Feed", data: users });
   } catch (error) {
     console.log("an error occured during getting all the users", error);
-    res.status(500).send("Someting went wrong");
+    res.status(400).send("Someting went wrong");
   }
 });
 
@@ -67,19 +92,16 @@ userRouter.get("/connections", userAuth, async (req, res) => {
       .populate("fromUserId", "firstName lastName age about photoUrl")
       .populate("toUserId", "firstName lastName age about photoUrl");
 
-
-
     if (allAcceptedConnections.length === 0) {
       res.json({ message: "No Connection made" });
     } else {
-      const filteredData = allAcceptedConnections.map(data =>{
-        
-        if(data.fromUserId._id.toString()===loggedInUser._id.toString()){
-          return data.toUserId
-        }else{
-          return data.fromUserId
+      const filteredData = allAcceptedConnections.map((data) => {
+        if (data.fromUserId._id.toString() === loggedInUser._id.toString()) {
+          return data.toUserId;
+        } else {
+          return data.fromUserId;
         }
-      })
+      });
       res.json({
         message: "Accepted Connections Request",
         data: filteredData,
@@ -99,7 +121,7 @@ userRouter.get("/requests", userAuth, async (req, res) => {
     const allConnectionRequests = await ConnectionRequest.find({
       toUserId: loggedInUser._id,
       status: "interested",
-    }).populate("fromUserId", "firstName lastName age gender about skills");
+    }).populate("fromUserId", userPublicData);
     // }).populate("fromUserId", ["firstName","lastName","age","gender","about","skills"])
 
     if (allConnectionRequests.length === 0) {
