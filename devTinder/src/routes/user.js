@@ -3,6 +3,7 @@ const User = require("../models/user");
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const { userPublicData } = require("../utils/constant");
+const calculateSkip = require("../utils/calculateSkip")
 
 const userRouter = express.Router();
 
@@ -27,6 +28,10 @@ userRouter.get("/feed", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
 
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    
+
     //Getting all the user which have connections
     const allConnectionReq = await ConnectionRequest.find({
       $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
@@ -49,7 +54,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
           _id: { $ne: loggedInUser._id },
         },
       ],
-    }).select(userPublicData);
+    }).select(userPublicData).skip(calculateSkip(page,limit)).limit(limit);
 
     if (users.length === 0) {
       return res.json({ message: "No user found" });
