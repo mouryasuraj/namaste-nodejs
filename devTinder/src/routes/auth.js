@@ -66,11 +66,18 @@ authRouter.post("/login", async (req, res) => {
         secure: false,
         expires: new Date(Date.now() + 3000000),
       });
-      res.send("logged in successfully.....");
+      res.json({message:"loggedIn successfully", user:{
+        firstName:user.firstName,
+        lastName:user.lastName,
+        age:user.age,
+        gender:user.gender,
+        about:user.about,
+        photoUrl:user.photoUrl,
+      }});
     }
   } catch (error) {
     console.log("Error", error.message);
-    res.status(500).send("Something went wrong " + error.message);
+    res.status(400).send("Something went wrong " + error.message);
   }
 });
 

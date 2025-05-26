@@ -8,18 +8,21 @@ const User = require("./models/user");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const userRouter = require("./routes/user");
-const requestRouter  = require("./routes/request");
+const requestRouter = require("./routes/request");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT;
+const origin = process.env.ORIGIN;
 
 app.use(express.json()); /// It will convert the JSON request body into Javacript Object
 app.use(cookieParser());
+app.use(cors({ origin: origin, credentials: true }));
 
-app.use('/auth', authRouter);
-app.use('/profile', profileRouter);
-app.use('/user', userRouter);
-app.use('/request', requestRouter)
+app.use("/auth", authRouter);
+app.use("/profile", profileRouter);
+app.use("/user", userRouter);
+app.use("/request", requestRouter);
 
 //Connect DB
 connectDB()

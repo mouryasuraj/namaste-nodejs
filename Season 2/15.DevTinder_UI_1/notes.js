@@ -11,4 +11,8 @@
 
 1. 
 
+
+
+1. Always put credentials:true at both the ends to get the cookie
+
 */
