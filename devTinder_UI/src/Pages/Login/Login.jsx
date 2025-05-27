@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { handleLogin } from "./login";
+import { useDispatch } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,7 +16,7 @@ const Login = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleLogin(email, password)
+            handleLogin(email, password, dispatch, navigate)
           }}
           className="card-body"
         >
