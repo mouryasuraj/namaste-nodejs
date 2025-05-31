@@ -1,19 +1,34 @@
+import axios from "axios";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { baseUrl } from "../utils/constants";
+import { removeUser } from "../utils/slices/userSlice";
 
 const Navbar = () => {
+  const user = useSelector((store) => store.user);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const user = useSelector(store => store.user)
-
-  console.log(user);
-  
-
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(baseUrl+"/auth/logout", {}, {withCredentials:true})
+      if(res.status===200){
+        dispatch(removeUser())
+        navigate('/login')
+      }
+    } catch (error) {
+      console.log("Something went wrong: ", error)
+    }
+  };
 
   return (
     <div>
       <div className="navbar bg-base-300 shadow-sm">
         <div className="flex-1">
-          <a className="cursor-pointer font-semibold text-xl">Developer Tinder</a>
+          <Link to="/" className="cursor-pointer font-semibold text-xl">
+            Developer Tinder
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           <div>
@@ -37,19 +52,22 @@ const Navbar = () => {
               className="menu menu-lg dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
+                <Link to="/profile" className="justify-between">
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a>Settings</a>
               </li>
               <li>
-                <a onClick={()=>{
-                  console.log("logging out.....");
-                  
-                }}>Logout</a>
+                <a
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </a>
               </li>
             </ul>
           </div>

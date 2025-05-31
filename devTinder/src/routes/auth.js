@@ -76,8 +76,8 @@ authRouter.post("/login", async (req, res) => {
       }});
     }
   } catch (error) {
-    console.log("Error", error.message);
-    res.status(400).send("Something went wrong " + error.message);
+    console.log("Something went wrong", error.message);
+    res.status(400).json({message:error.message});
   }
 });
 

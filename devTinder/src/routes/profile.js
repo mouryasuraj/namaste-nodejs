@@ -38,7 +38,16 @@ profileRouter.get("/", userAuth, (req, res) => {
 
   try {
     const user = req.user;
-    res.json(user);
+    res.json({
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        age: user.age,
+        gender: user.gender,
+        about: user.about,
+        photoUrl: user.photoUrl,
+      },
+    });
   } catch (error) {
     res.status(500).status(403).send("Something went wrong");
   }
@@ -92,9 +101,12 @@ profileRouter.patch("/resetpassword", userAuth, async (req, res) => {
     validateResetPassword(req);
     const { _id, password } = req.user;
     const { newPassword, currentPassword } = req.body;
-    const isCurrentPasswordValid = await bcrypt.compare(currentPassword, password )
-    if(!isCurrentPasswordValid){
-        throw new Error("Current password is not correct")
+    const isCurrentPasswordValid = await bcrypt.compare(
+      currentPassword,
+      password
+    );
+    if (!isCurrentPasswordValid) {
+      throw new Error("Current password is not correct");
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await User.findByIdAndUpdate(_id, {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { handleLogin } from "./login";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -8,15 +8,17 @@ const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center flex-col gap-10 justify-center min-h-screen">
+      <h2 className="text-2xl font-bold">Developer Tinder</h2>
       <div className="card card-border bg-base-300 w-96">
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleLogin(email, password, dispatch, navigate)
+            handleLogin(email, password, dispatch, navigate,setErrorMsg)
           }}
           className="card-body"
         >
@@ -27,11 +29,12 @@ const Login = () => {
               <input
                 required
                 value={email}
+                
                 onChange={(e) => {
                   const inputVal = e.target.value;
                   setEmail(inputVal);
                 }}
-                type="text"
+                type="email"
                 className="input mt-1 "
               />
             </div>
@@ -43,6 +46,7 @@ const Login = () => {
               }} required type="password" className="input mt-1" />
             </div>
           </div>
+          <p className="text-red-300">{errorMsg}</p>
           <div className="card-actions">
             <button className="btn btn-primary w-full">Login</button>
           </div>
