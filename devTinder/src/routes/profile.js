@@ -3,23 +3,24 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { userAuth } = require("../middlewares/auth");
 const { validateResetPassword } = require("../utils/validation");
+const { userPublicData } = require("../utils/constant");
 
 const profileRouter = express.Router();
 
 // This middleware is used when param: id will present in the url
-profileRouter.param("/:id", async (req, res, next) => {
-  try {
-    const userId = req.params.id;
-    if (!userId) throw new Error("Parameter userId is not present");
+// profileRouter.param("/:id", async (req, res, next) => {
+//   try {
+//     const userId = req.params.id;
+//     if (!userId) throw new Error("Parameter userId is not present");
 
-    const user = await User.findById(userId);
-    if (!user) throw new Error("User not found");
-    req.user = user;
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
+//     const user = await User.findById(userId);
+//     if (!user) throw new Error("User not found");
+//     req.user = user;
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // API - /profile
 profileRouter.get("/", userAuth, (req, res) => {
@@ -40,6 +41,7 @@ profileRouter.get("/", userAuth, (req, res) => {
     const user = req.user;
     res.json({
       user: {
+        _id:user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         age: user.age,
@@ -54,7 +56,7 @@ profileRouter.get("/", userAuth, (req, res) => {
 });
 
 //UPdate User API - /updateUser
-profileRouter.patch("/edit/:userId", userAuth, async (req, res) => {
+profileRouter.put("/edit/:userId", userAuth, async (req, res) => {  
   const userId = req.params.userId;
   const dataToUpdate = req.body;
   const allowedUpdates = [
@@ -81,13 +83,13 @@ profileRouter.patch("/edit/:userId", userAuth, async (req, res) => {
       // returnDocument:"before",
       returnOriginal: false,
       runValidators: true, // Use to validate
-    });
+    }).select(userPublicData);
     if (!user) {
       res.status(404).send("User not found");
       return;
     }
     res.json({
-      message: "User Updated Successfully",
+      message: "Profile Updated Successfully",
       updatedData: user,
     });
   } catch (error) {

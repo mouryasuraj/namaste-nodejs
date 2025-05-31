@@ -9,6 +9,9 @@ export const handleLogin = async (email, password, dispatch, navigate,setErrorMs
       { email, password },
       { withCredentials: true }
     );
+
+    console.log("asdfsdfsdfsdf",response.data);
+    
     
     dispatch(addUser(response.data.user))
     navigate("/")

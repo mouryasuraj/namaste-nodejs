@@ -67,6 +67,7 @@ authRouter.post("/login", async (req, res) => {
         expires: new Date(Date.now() + 3000000),
       });
       res.json({message:"loggedIn successfully", user:{
+        _id:user._id,
         firstName:user.firstName,
         lastName:user.lastName,
         age:user.age,
