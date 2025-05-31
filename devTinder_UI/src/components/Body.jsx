@@ -7,6 +7,7 @@ import axios from 'axios'
 import { baseUrl } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/slices/userSlice'
+import Loader from './Loader'
 
 const Body = () => {
   const dispatch = useDispatch()
@@ -31,9 +32,7 @@ const Body = () => {
   },[])
 
   if(!user){
-    return <div className='flex items-center h-screen justify-center font-bold text-3xl'>
-      Loading....
-    </div>
+    return <Loader />
   }
 
 

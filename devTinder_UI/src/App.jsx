@@ -3,7 +3,6 @@ import Login from "./Pages/Login/Login.jsx";
 import Profile from "./Pages/Profile/Profile";
 import Body from "./components/Body.jsx";
 import Feed from "./Pages/Home/Feed.jsx";
-import { useSelector } from "react-redux";
 
 function App() {
     

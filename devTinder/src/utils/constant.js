@@ -6,7 +6,7 @@ const allowedResetPasswordFields = ["currentPassword", "newPassword", "confirmPa
 const allowedSendStatusType = ["interested", "ignored"]
 const allowedReviewStatusType = ["accepted", "rejected"]
 
-const userPublicData = "firstName lastName age gender about skills"
+const userPublicData = "firstName lastName age gender about skills photoUrl"
 
 
 module.exports = {allowedGenders, allowedSignUpFields, allowedUserFieldUpdate, allowedLoginFields, allowedResetPasswordFields, allowedSendStatusType, allowedReviewStatusType, userPublicData}

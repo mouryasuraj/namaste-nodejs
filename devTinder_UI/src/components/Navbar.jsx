@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../utils/constants";
 import { removeUser } from "../utils/slices/userSlice";
+import { removeFeed } from "../utils/slices/feedSlice";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -15,6 +16,7 @@ const Navbar = () => {
       const res = await axios.post(baseUrl+"/auth/logout", {}, {withCredentials:true})
       if(res.status===200){
         dispatch(removeUser())
+        dispatch(removeFeed())
         navigate('/login')
       }
     } catch (error) {
@@ -43,7 +45,7 @@ const Navbar = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Profile Picture"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={user.photoUrl}
                 />
               </div>
             </div>
