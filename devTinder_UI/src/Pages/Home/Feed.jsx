@@ -28,9 +28,6 @@ const Feed = () => {
     }
   }, []);
 
-  if (!feed) {
-    return <Loader />;
-  }
 
   return (
     <div className="flex items-center justify-center mt-24">

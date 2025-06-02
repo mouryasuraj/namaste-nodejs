@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { handleUpdateProfile } from "./proflieService";
 import { genders } from "../../utils/constants";
 import Toastify from "../../components/Toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../utils/slices/userSlice";
 
 const ProfileForm = ({ userData, userId }) => {
+  const dispatch = useDispatch()
+  const [toastMsg, setToastMsg] = useState("");
+
   const {
     firstName,
     setFirstName,
@@ -19,8 +22,6 @@ const ProfileForm = ({ userData, userId }) => {
     setAbout,
   } = userData;
 
-  const [toastMsg, setToastMsg] = useState("");
-  const dispatch = useDispatch()
 
   const payload = {
     firstName,

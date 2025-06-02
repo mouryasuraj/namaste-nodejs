@@ -5,22 +5,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../utils/constants";
 import { removeUser } from "../utils/slices/userSlice";
 import { removeFeed } from "../utils/slices/feedSlice";
+import Loader from "./Loader";
+import { setLoading } from "../utils/slices/loadingSlice";
 
 const Navbar = () => {
-  const user = useSelector((store) => store.user);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { user, loading } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
+    dispatch(setLoading(true));
     try {
-      const res = await axios.post(baseUrl+"/auth/logout", {}, {withCredentials:true})
-      if(res.status===200){
-        dispatch(removeUser())
-        dispatch(removeFeed())
-        navigate('/login')
+      const res = await axios.post(
+        baseUrl + "/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+      if (res.status === 200) {
+        dispatch(removeUser());
+        dispatch(removeFeed());
+        navigate("/login");
       }
     } catch (error) {
-      console.log("Something went wrong: ", error)
+      console.log("Something went wrong: ", error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -31,6 +40,10 @@ const Navbar = () => {
           <Link to="/" className="cursor-pointer font-semibold text-xl">
             Developer Tinder
           </Link>
+        </div>
+        <div className="indicator mr-10">
+          <span className="indicator-item badge badge-error">12</span>
+          <Link to="/requests" className="btn btn-accent">Requests</Link>
         </div>
         <div className="flex items-center gap-3">
           <div>
@@ -43,10 +56,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="Profile Picture"
-                  src={user.photoUrl}
-                />
+                <img alt="Profile Picture" src={user.photoUrl} />
               </div>
             </div>
             <ul
@@ -56,11 +66,10 @@ const Navbar = () => {
               <li>
                 <Link to="/profile" className="justify-between">
                   Profile
-                  <span className="badge">New</span>
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/connections">Connections</Link>
               </li>
               <li>
                 <a
@@ -75,6 +84,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      {loading && <Loader />}
     </div>
   );
 };
