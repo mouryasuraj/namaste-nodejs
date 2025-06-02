@@ -1,16 +1,19 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { handleFetchConnectionRequests } from "./requestService"
 import RequestCard from "./RequestCard"
+import Toastify from "../../components/Toastify"
 
 const Request = () => {
 
   const dispatch = useDispatch()
   const requests = useSelector(store => store.requests)
+  const [message, setMessage] = useState(false)
+  const [reload, setReload] = useState("")
 
   useEffect(()=>{
     handleFetchConnectionRequests(dispatch)
-  },[])
+  },[reload])
 
 
   return (
@@ -19,10 +22,11 @@ const Request = () => {
       <div className="m-5 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
         {requests.length===0 ? <div>No Request found</div> : requests.map((request) => {
           return (
-            <RequestCard key={request.fromUserId._id} request={request.fromUserId} />
+            <RequestCard key={request._id} setMessage={setMessage} setReload={setReload}  requestId={request._id} request={request.fromUserId} />
           );
         })}
       </div>
+     {message && <Toastify message={message} />}
     </div>
   )
 }

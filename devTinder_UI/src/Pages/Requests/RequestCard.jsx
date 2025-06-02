@@ -1,5 +1,10 @@
-const RequestCard = ({ request }) => {
+import { useDispatch } from "react-redux";
+import { handleReviewConnection } from "./requestService";
+
+const RequestCard = ({ request, requestId,setMessage,setReload }) => {
+  const dispatch = useDispatch();
   const { firstName, lastName, age, photoUrl, about } = request;
+
   return (
     <div className="flex gap-3 items-center bg-base-300 p-3 rounded-xl">
       <div>
@@ -15,8 +20,22 @@ const RequestCard = ({ request }) => {
         </h2>
         <p className="text-sm">{about}</p>
         <div className="space-x-3">
-          <button className="btn btn-error">Reject</button>
-          <button className="btn btn-success">Accept</button>
+          <button
+            onClick={() =>
+              handleReviewConnection("rejected", dispatch, requestId,setMessage,setReload)
+            }
+            className="btn btn-error"
+          >
+            Reject
+          </button>
+          <button
+            onClick={() =>
+              handleReviewConnection("accepted", dispatch, requestId,setMessage,setReload)
+            }
+            className="btn btn-success"
+          >
+            Accept
+          </button>
         </div>
       </div>
     </div>
