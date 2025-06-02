@@ -7,9 +7,11 @@ import { removeUser } from "../utils/slices/userSlice";
 import { removeFeed } from "../utils/slices/feedSlice";
 import Loader from "./Loader";
 import { setLoading } from "../utils/slices/loadingSlice";
+import { removeConnections } from "../utils/slices/connectionSlice";
+import { removeRequest } from "../utils/slices/requestSlice";
 
 const Navbar = () => {
-  const { user, loading } = useSelector((store) => store);
+  const { user, loading, requests } = useSelector((store) => store);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,6 +26,8 @@ const Navbar = () => {
       if (res.status === 200) {
         dispatch(removeUser());
         dispatch(removeFeed());
+        dispatch(removeConnections())
+        dispatch(removeRequest())
         navigate("/login");
       }
     } catch (error) {
@@ -42,8 +46,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="indicator mr-10">
-          <span className="indicator-item badge badge-error">12</span>
-          <Link to="/requests" className="btn btn-accent">Requests</Link>
+          <Link to="/requests" className="btn btn-accent">Connection Requests</Link>
         </div>
         <div className="flex items-center gap-3">
           <div>

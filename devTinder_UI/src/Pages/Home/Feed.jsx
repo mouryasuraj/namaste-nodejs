@@ -23,7 +23,7 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    if (!feed) {
+    if (feed.length===0) {
       getAllFeed();
     }
   }, []);

@@ -1,4 +1,3 @@
-import React from "react";
 
 const ConnectionCard = ({ connection }) => {
   const { firstName, lastName, age, photoUrl,about } = connection;

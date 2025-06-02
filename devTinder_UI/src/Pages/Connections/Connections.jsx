@@ -10,11 +10,12 @@ const Connections = () => {
     handleFetchConnections(dispatch);
   }, []);
 
+
   return (
     <div>
-      <h1 className="m-5 text-2xl">Connections</h1>
+      <h1 className="m-5 text-2xl">Connections </h1>
       <div className="m-5 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-        {connections.map((connection) => {
+        {connections.length===0 ? <div>No Connection Made</div> : connections.map((connection) => {
           return (
             <ConnectionCard key={connection._id} connection={connection} />
           );
