@@ -5,6 +5,7 @@ import Body from "./components/Body.jsx";
 import Feed from "./Pages/Home/Feed.jsx";
 import Request from "./Pages/Requests/Request.jsx";
 import Connections from "./Pages/Connections/Connections.jsx";
+import SignUp from "./Pages/Sign Up/SignUp.jsx";
 
 function App() {
     
@@ -13,6 +14,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<Body />}>
           <Route path="/" element={<Feed />} />
           <Route path="/profile" element={<Profile />} />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { handleLogin } from "./login";
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -50,6 +50,7 @@ const Login = () => {
           <div className="card-actions">
             <button className="btn btn-primary w-full">Login</button>
           </div>
+          <Link to="/signup" className="text-right text-gray-200 cursor-pointer hover:underline">Create an account?</Link>
         </form>
       </div>
     </div>

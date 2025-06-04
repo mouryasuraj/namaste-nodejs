@@ -29,11 +29,26 @@ authRouter.post("/signup", async (req, res) => {
       gender,
       photoUrl,
     });
-    await user.save();
+    const savedUser = await user.save();
+
+    const token =await savedUser.getJWT();
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      expires: new Date(Date.now() + 3000000),
+    });
+
     res.json({
       message: "User created successfully",
-      userDetails: {
-        email: email,
+      user: {
+        _id: savedUser._id,
+        firstName: savedUser.firstName,
+        lastName: savedUser.lastName,
+        age: savedUser.age,
+        gender: savedUser.gender,
+        about: savedUser.about,
+        photoUrl: savedUser.photoUrl,
       },
     });
   } catch (error) {
@@ -66,19 +81,22 @@ authRouter.post("/login", async (req, res) => {
         secure: false,
         expires: new Date(Date.now() + 3000000),
       });
-      res.json({message:"loggedIn successfully", user:{
-        _id:user._id,
-        firstName:user.firstName,
-        lastName:user.lastName,
-        age:user.age,
-        gender:user.gender,
-        about:user.about,
-        photoUrl:user.photoUrl,
-      }});
+      res.json({
+        message: "loggedIn successfully",
+        user: {
+          _id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          age: user.age,
+          gender: user.gender,
+          about: user.about,
+          photoUrl: user.photoUrl,
+        },
+      });
     }
   } catch (error) {
     console.log("Something went wrong", error.message);
-    res.status(400).json({message:error.message});
+    res.status(400).json({ message: error.message });
   }
 });
 
