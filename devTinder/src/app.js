@@ -28,7 +28,10 @@ app.use(cors({
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/user", userRouter);
+
+console.log("before");
 app.use("/request", requestRouter);
+console.log("after");
 
 //Connect DB
 connectDB()

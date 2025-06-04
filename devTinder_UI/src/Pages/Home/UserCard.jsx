@@ -1,7 +1,10 @@
-const UserCard = ({ user, setCurrentUser, totalFeed }) => {
-  const { photoUrl, firstName, lastName, age, gender, about } = user;
+import { useDispatch } from "react-redux";
+import { handleSendRequest } from "./homeService";
 
-  console.log("adfadsfasd", firstName, lastName);
+const UserCard = ({ user }) => {
+  const { _id, photoUrl, firstName, lastName, age, gender, about } = user;
+  const dispatch = useDispatch()
+
 
   return (
     <div className="card bg-base-300 w-96 shadow-sm">
@@ -15,7 +18,7 @@ const UserCard = ({ user, setCurrentUser, totalFeed }) => {
         <div className="card-actions justify-end">
           <button
             onClick={() => {
-              setCurrentUser((prev) => prev + 1);
+              handleSendRequest(dispatch, _id, "ignored")
             }}
             className="btn btn-primary"
           >
@@ -23,7 +26,7 @@ const UserCard = ({ user, setCurrentUser, totalFeed }) => {
           </button>
           <button
             onClick={() => {
-              setCurrentUser((prev) => prev + 1);
+              handleSendRequest(dispatch, _id, "interested")
             }}
             className="btn btn-secondary"
           >

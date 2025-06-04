@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setLoading } from "../../utils/slices/loadingSlice";
 import { baseUrl } from "../../utils/constants";
-import { addRequests } from "../../utils/slices/requestSlice";
+import { addRequests, removeUserRequest } from "../../utils/slices/requestSlice";
 
 export const handleFetchConnectionRequests = async (dispatch) => {
   dispatch(setLoading(true));
@@ -17,13 +17,13 @@ export const handleFetchConnectionRequests = async (dispatch) => {
   }
 };
 
-export const handleReviewConnection = async (status, dispatch, requestId,setMessage,setReload) => {
+export const handleReviewConnection = async (status, dispatch, requestId,setMessage) => {
   dispatch(setLoading(true));
   
   try {
     const res = await axios.post(baseUrl+`/request/review/${status}/${requestId}`, {}, {withCredentials:true})
     setMessage(res.data.message)
-    setReload(Math.random())
+    dispatch(removeUserRequest(requestId))
   } catch (error) {
     console.error("Something went wrong: ", error);
   } finally {

@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../utils/constants";
 import { removeUser } from "../utils/slices/userSlice";
-import { removeFeed } from "../utils/slices/feedSlice";
+import { clearFeed } from "../utils/slices/feedSlice";
 import Loader from "./Loader";
 import { setLoading } from "../utils/slices/loadingSlice";
 import { removeConnections } from "../utils/slices/connectionSlice";
-import { removeRequest } from "../utils/slices/requestSlice";
+import { clearRequests } from "../utils/slices/requestSlice";
 
 const Navbar = () => {
   const { user, loading, requests } = useSelector((store) => store);
@@ -25,9 +25,9 @@ const Navbar = () => {
       );
       if (res.status === 200) {
         dispatch(removeUser());
-        dispatch(removeFeed());
+        dispatch(clearFeed());
         dispatch(removeConnections())
-        dispatch(removeRequest())
+        dispatch(clearRequests())
         navigate("/login");
       }
     } catch (error) {

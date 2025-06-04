@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { handleReviewConnection } from "./requestService";
 
-const RequestCard = ({ request, requestId,setMessage,setReload }) => {
+const RequestCard = ({ request, requestId,setMessage }) => {
   const dispatch = useDispatch();
   const { firstName, lastName, age, photoUrl, about } = request;
 
@@ -22,7 +22,7 @@ const RequestCard = ({ request, requestId,setMessage,setReload }) => {
         <div className="space-x-3">
           <button
             onClick={() =>
-              handleReviewConnection("rejected", dispatch, requestId,setMessage,setReload)
+              handleReviewConnection("rejected", dispatch, requestId,setMessage)
             }
             className="btn btn-error"
           >
@@ -30,7 +30,7 @@ const RequestCard = ({ request, requestId,setMessage,setReload }) => {
           </button>
           <button
             onClick={() =>
-              handleReviewConnection("accepted", dispatch, requestId,setMessage,setReload)
+              handleReviewConnection("accepted", dispatch, requestId,setMessage)
             }
             className="btn btn-success"
           >

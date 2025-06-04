@@ -9,7 +9,6 @@ import { addFeed } from "../../utils/slices/feedSlice";
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
   const dispatch = useDispatch();
-  const [currentUser, setCurrentUser] = useState(0);
 
   const getAllFeed = async () => {
     try {
@@ -31,10 +30,9 @@ const Feed = () => {
 
   return (
     <div className="flex items-center justify-center mt-24">
-      {currentUser < feed.length ? (
+      {feed.length!==0 ? (
         <UserCard
-          user={feed[currentUser]}
-          setCurrentUser={setCurrentUser}
+          user={feed[0]}
           totalFeed={feed.length}
         />
       ) : (
