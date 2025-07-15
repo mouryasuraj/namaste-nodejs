@@ -41,12 +41,12 @@ const Navbar = () => {
     <div>
       <div className="navbar bg-base-300 shadow-sm">
         <div className="flex-1">
-          <Link to="/" className="cursor-pointer font-semibold text-xl">
+          <Link to="/home" className="cursor-pointer font-semibold text-xl">
             Developer Tinder
           </Link>
         </div>
         <div className="indicator mr-10">
-          <Link to="/requests" className="btn btn-accent">Connection Requests</Link>
+          <Link to="/home/requests" className="btn btn-accent">Connection Requests</Link>
         </div>
         <div className="flex items-center gap-3">
           <div>
@@ -67,12 +67,12 @@ const Navbar = () => {
               className="menu menu-lg dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to="/profile" className="justify-between">
+                <Link to="/home/profile" className="justify-between">
                   Profile
                 </Link>
               </li>
               <li>
-                <Link to="/connections">Connections</Link>
+                <Link to="/home/connections">Connections</Link>
               </li>
               <li>
                 <a

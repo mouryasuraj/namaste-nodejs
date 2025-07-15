@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./Pages/Login/Login.jsx";
 import Profile from "./Pages/Profile/Profile";
 import Body from "./components/Body.jsx";
@@ -13,13 +13,14 @@ function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Navigate to="/login"/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<Body />}>
-          <Route path="/" element={<Feed />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/connections" element={<Connections />} />
-          <Route path="/requests" element={<Request />} />
+        <Route path="/home" element={<Body />}>
+          <Route path="/home" element={<Feed />} />
+          <Route path="/home/profile" element={<Profile />} />
+          <Route path="/home/connections" element={<Connections />} />
+          <Route path="/home/requests" element={<Request />} />
         </Route>
       </Routes>
     </div>

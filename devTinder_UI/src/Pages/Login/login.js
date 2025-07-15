@@ -16,7 +16,7 @@ export const handleLogin = async (email, password, dispatch, navigate,setErrorMs
     
     
     dispatch(addUser(response.data.user))
-    navigate("/")
+    navigate("/home")
   } catch (error) {
     console.log("Something went wrong", error);
     setErrorMsg(error.response.data.message)

@@ -28,7 +28,7 @@ export const handleSignUp = async (
   try {
     const res = await axios.post(`${baseUrl}/auth/signup`, payload, {withCredentials:true})
     dispatch(addUser(res.data.user))
-    navigate("/profile")
+    navigate("/home/profile")
     
   } catch (error) {
     console.log("Something went wrong: ", error);
