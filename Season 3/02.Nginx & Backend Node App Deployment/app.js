@@ -5,7 +5,7 @@
 // Nginx & Backend Node App Deployment
 
 1. Run application in background using PM2(Process Manager 2). here 2 indicates version
-2. PM2 help to manage application in background, it will restart the application if it crashes
+2. PM2 help to manage application in background, it will restart the application if it crash.
 3. npm i pm2 --g and then hit the cmd - pm2 start npm -- start
 4. PM2 commands:
     - pm2 logs application-name - It will show the logs of a particular application
