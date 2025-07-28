@@ -4,6 +4,7 @@ const express = require("express");
 const User = require("../models/user.js");
 const { validateSendConnectionData, validateReviewRequestBody } = require("../utils/validation.js");
 const ConnectionRequest = require("../models/connectionRequest.js");
+const run = require("../utils/sendEmail.js");
 
 const requestRouter = express.Router();
 
@@ -40,6 +41,10 @@ requestRouter.post("/send/:status/:toUserId", userAuth, async (req, res) => {
     });
 
     const requestData = await connectionRequest.save()
+
+    const emailRes = await run()
+    console.log(emailRes);
+    
     res.json({
         message:`${req.user.firstName} is ${status}${status==="interested" ? " in" : ""} ${toUser.firstName}`,
         data:requestData

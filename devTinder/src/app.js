@@ -15,14 +15,14 @@ const app = express();
 const PORT = process.env.PORT;
 const origin = process.env.ORIGIN;
 
-app.use(express.json()); /// It will convert the JSON request body into Javacript Object
-app.use(cookieParser());
 app.use(cors({
   origin: origin,
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use(express.json()); /// It will convert the JSON request body into Javacript Object
+app.use(cookieParser());
 
 
 app.use("/auth", authRouter);

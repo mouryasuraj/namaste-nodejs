@@ -13,6 +13,8 @@
   "author": "Suraj Mourya",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.848.0",
+    "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
