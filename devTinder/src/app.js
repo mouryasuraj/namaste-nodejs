@@ -10,6 +10,7 @@ const profileRouter = require("./routes/profile");
 const userRouter = require("./routes/user");
 const requestRouter = require("./routes/request");
 const cors = require("cors");
+require("../src/utils/cronjob.js")
 
 const app = express();
 const PORT = process.env.PORT;
