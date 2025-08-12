@@ -12,9 +12,9 @@ const Login = () => {
 
 
   return (
-    <div className="flex items-center flex-col gap-10 justify-center min-h-screen">
-      <h2 className="text-2xl font-bold">Developer Tinder</h2>
-      <div className="card card-border bg-base-300 w-96">
+    <div className="mt-10">
+      <h2 className="text-2xl text-center my-3 font-bold">Developer Tinder</h2>
+      <div className="card mx-auto card-border bg-base-300 w-96">
         <form
           onSubmit={(e) => {
             e.preventDefault();

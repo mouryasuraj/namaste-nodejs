@@ -6,21 +6,35 @@ import Feed from "./Pages/Home/Feed.jsx";
 import Request from "./Pages/Requests/Request.jsx";
 import Connections from "./Pages/Connections/Connections.jsx";
 import SignUp from "./Pages/Sign Up/SignUp.jsx";
+import Layout from "./components/Layout.jsx";
+import ReturnPolicy from "./Pages/Policy/ReturnPolicy.jsx";
+import RefundPolicy from "./Pages/Policy/RefundPolicy.jsx";
+import PrivacyPolicy from "./Pages/Policy/PrivacyPolicy.jsx";
+import Disclaimer from "./Pages/Policy/Disclaimer.jsx";
+import AboutAndContact from "./Pages/Policy/AboutAndContact.jsx";
 
 function App() {
-    
-
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Navigate to="/login"/>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Body />}>
-          <Route path="/home" element={<Feed />} />
-          <Route path="/home/profile" element={<Profile />} />
-          <Route path="/home/connections" element={<Connections />} />
-          <Route path="/home/requests" element={<Request />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          {/* Policies */}
+          <Route path="/returnpolicy" element={<ReturnPolicy />} />
+          <Route path="/refundpolicy" element={<RefundPolicy />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/aboutandcontact" element={<AboutAndContact />} />
+
+          <Route path="/home" element={<Body />}>
+            <Route path="/home" element={<Feed />} />
+            <Route path="/home/profile" element={<Profile />} />
+            <Route path="/home/connections" element={<Connections />} />
+            <Route path="/home/requests" element={<Request />} />
+          </Route>
+
         </Route>
       </Routes>
     </div>
