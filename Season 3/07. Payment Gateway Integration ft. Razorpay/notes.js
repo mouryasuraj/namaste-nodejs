@@ -20,7 +20,10 @@
     note:
         1. We can't connect our UI direct to razor pay because it is a security risk instead we will connect to our backeend and let backend do its job
         2. To connect to razorpay we need a secret key which only accessible in backend
-
+    
+    1. First, we will create an order by clicking on the buy button to server.
+    2. In server, it will connect to razorpay with secretkey and create an order and response back with orderid and then server will response back to the UI.
+    3. then after payment completed razor pay automatically create payment id and signature and server will store the data of successfull or failed payment
 
 
 

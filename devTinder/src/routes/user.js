@@ -3,7 +3,7 @@ const User = require("../models/user");
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const { userPublicData } = require("../utils/constant");
-const calculateSkip = require("../utils/calculateSkip")
+const calculateSkip = require("../utils/calculateSkip");
 
 const userRouter = express.Router();
 
@@ -30,7 +30,6 @@ userRouter.get("/feed", userAuth, async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
-    
 
     //Getting all the user which have connections
     const allConnectionReq = await ConnectionRequest.find({
@@ -54,7 +53,10 @@ userRouter.get("/feed", userAuth, async (req, res) => {
           _id: { $ne: loggedInUser._id },
         },
       ],
-    }).select(userPublicData).skip(calculateSkip(page,limit)).limit(limit);
+    })
+      .select(userPublicData)
+      .skip(calculateSkip(page, limit))
+      .limit(limit);
 
     if (users.length === 0) {
       return res.json({ message: "No user found" });
@@ -136,6 +138,29 @@ userRouter.get("/requests", userAuth, async (req, res) => {
     }
   } catch (error) {
     console.log("Something went wrong: ", error.message);
+    res.status(400).json({ message: "Something went wrong" });
+  }
+});
+
+userRouter.get("/premiun/verify", userAuth, (req, res) => {
+  try {
+    const user = req.user;
+
+    res.json({
+      message: "User created successfully",
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        age: user.age,
+        gender: user.gender,
+        about: user.about,
+        photoUrl: user.photoUrl,
+        isPremium:user.isPremium,
+        memberShipType:user.memberShipType,
+      },
+    });
+  } catch (error) {
     res.status(400).json({ message: "Something went wrong" });
   }
 });

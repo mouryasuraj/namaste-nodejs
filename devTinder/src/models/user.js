@@ -76,6 +76,13 @@ const userSchema = new Schema(
       type: [String],
       default: ["Shiv"],
     },
+    isPremium:{
+      type:Boolean,
+      default:false
+    },
+    memberShipType:{
+      type:String
+    }
   },
   {
     timestamps: true,

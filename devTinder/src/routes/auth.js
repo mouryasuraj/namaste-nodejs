@@ -49,6 +49,8 @@ authRouter.post("/signup", async (req, res) => {
         gender: savedUser.gender,
         about: savedUser.about,
         photoUrl: savedUser.photoUrl,
+        isPremium:savedUser.isPremium,
+        memberShipType:savedUser.memberShipType,
       },
     });
   } catch (error) {
