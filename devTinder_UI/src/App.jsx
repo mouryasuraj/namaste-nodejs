@@ -12,6 +12,7 @@ import RefundPolicy from "./Pages/Policy/RefundPolicy.jsx";
 import PrivacyPolicy from "./Pages/Policy/PrivacyPolicy.jsx";
 import Disclaimer from "./Pages/Policy/Disclaimer.jsx";
 import AboutAndContact from "./Pages/Policy/AboutAndContact.jsx";
+import Premium from "./Pages/Premium/Premium.jsx";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/home/profile" element={<Profile />} />
             <Route path="/home/connections" element={<Connections />} />
             <Route path="/home/requests" element={<Request />} />
+            <Route path="/home/premium" element={<Premium />} />
           </Route>
 
         </Route>

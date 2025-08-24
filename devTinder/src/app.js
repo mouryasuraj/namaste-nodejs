@@ -1,15 +1,13 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const connectDB = require("./config/database");
-const User = require("./models/user");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const userRouter = require("./routes/user");
 const requestRouter = require("./routes/request");
 const cors = require("cors");
+const paymentRouter = require("./routes/payment.js");
 require("../src/utils/cronjob.js")
 
 const app = express();
@@ -29,18 +27,13 @@ app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/user", userRouter);
-
-console.log("before");
 app.use("/request", requestRouter);
-console.log("after");
+app.use("/payment", paymentRouter);
 
 //Connect DB
 connectDB()
   .then(async (res) => {
     console.log("Database connected successfully");
-    const indxes = await User.collection.indexes();
-    // console.log(indxes);
-
     app.listen(PORT, () => {
       console.log("Server is running on port: ", PORT);
     });

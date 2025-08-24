@@ -39,9 +39,7 @@ const Body = () => {
 
   return (
     <div>
-        <Navbar />
         <Outlet />
-        <Footer />
     </div>
   )
 }

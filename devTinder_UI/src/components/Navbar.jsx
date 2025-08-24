@@ -46,7 +46,7 @@ const Navbar = () => {
           </Link>
         </div>
         {user ? (
-          <div>
+          <div className="flex">
             <div className="indicator mr-10">
               <Link to="/home/requests" className="btn btn-accent">
                 Connection Requests
@@ -72,11 +72,14 @@ const Navbar = () => {
                 >
                   <li>
                     <Link to="/home/profile" className="justify-between">
-                      Profile
+                      😎 Profile
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/connections">Connections</Link>
+                    <Link to="/home/connections">🤼 Connections</Link>
+                  </li>
+                  <li>
+                    <Link to="/home/premium">👑 Premium</Link>
                   </li>
                   <li>
                     <a
@@ -84,7 +87,7 @@ const Navbar = () => {
                         handleLogout();
                       }}
                     >
-                      Logout
+                      ⏩ Logout
                     </a>
                   </li>
                 </ul>
