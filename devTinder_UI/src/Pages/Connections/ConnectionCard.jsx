@@ -1,6 +1,7 @@
+import {Link} from 'react-router-dom'
 
 const ConnectionCard = ({ connection }) => {
-  const { firstName, lastName, age, photoUrl,about } = connection;
+  const { firstName, lastName, age, photoUrl, about,_id } = connection;
   return (
     <div className="flex gap-3 bg-base-300 p-3 rounded-xl">
       <div>
@@ -13,6 +14,11 @@ const ConnectionCard = ({ connection }) => {
       <div>
         <h2 className="font-bold">{firstName + " " + lastName}, {age && age}</h2>
         <p className="text-sm">{about}</p>
+        <div className="flex justify-end">
+          <Link to={`/home/chat/${_id}`}>
+            <button className="btn btn-primary">💬 Chat</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

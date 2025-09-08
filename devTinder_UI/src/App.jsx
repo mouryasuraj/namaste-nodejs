@@ -13,6 +13,7 @@ import PrivacyPolicy from "./Pages/Policy/PrivacyPolicy.jsx";
 import Disclaimer from "./Pages/Policy/Disclaimer.jsx";
 import AboutAndContact from "./Pages/Policy/AboutAndContact.jsx";
 import Premium from "./Pages/Premium/Premium.jsx";
+import Chat from "./Pages/Chat/Chat.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/home/connections" element={<Connections />} />
             <Route path="/home/requests" element={<Request />} />
             <Route path="/home/premium" element={<Premium />} />
+            <Route path="/home/chat/:toUserId" element={<Chat />} />
           </Route>
 
         </Route>
