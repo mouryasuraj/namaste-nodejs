@@ -10,6 +10,7 @@ const requestRouter = require("./routes/request");
 const cors = require("cors");
 const paymentRouter = require("./routes/payment.js");
 const initializeSocket = require("./config/socket.js");
+const chatRouter = require("./routes/chat.js");
 require("../src/utils/cronjob.js")
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/profile", profileRouter);
 app.use("/user", userRouter);
 app.use("/request", requestRouter);
 app.use("/payment", paymentRouter);
+app.use("/chat", chatRouter);
 
 // Socket Connection
 const server = http.createServer(app)

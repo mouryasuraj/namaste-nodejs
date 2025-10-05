@@ -21,9 +21,6 @@ const userAuth = async (req, res, next) => {
       return res.status(401).send("Please login");
     }
 
-    console.log("bulli", token);
-    
-
     //validate token
     const decodedData = jwt.verify(token, process.env.SECRETKEY);
     if (!decodedData) {

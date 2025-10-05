@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import createSocketConnection from '../../utils/socket'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeCurrChatUser } from '../../utils/slices/currentChatUserSlice'
+import { getAllChat } from './services/chatServices'
 
 const Chat = () => {
   const { toUserId } = useParams()
-  const user = useSelector(store => store.user)
+  const {user, currentChatUser} = useSelector(store => store)
   const userId = user?._id
-  console.log(user);
+  const dispatch = useDispatch()
+
+  console.log("currentChatUser",currentChatUser)
 
   const [messageVal, setMessageVal] = useState("")
   const [messages, setMessages] = useState([])
@@ -19,15 +23,17 @@ const Chat = () => {
     socket.emit('joinchat', { firstName: user.firstName, userId, toUserId })
 
 
-    socket.on('messagereceived', ({ firstName, text,userId, toUserId }) => {
-      console.log("asdfsdfsd", text);
-      setMessages(prev => [...prev, { firstName, text,userId }])
+    socket.on('messagereceived', (data) => {
+      setMessages(prev => [...prev, data])
     })
+
+    getAllChat(userId, toUserId)
 
 
     // Disconnect from socket when component unmount
     return () => {
       socket.disconnect()
+      dispatch(removeCurrChatUser())
     }
   }, [])
 
@@ -35,10 +41,12 @@ const Chat = () => {
   const handleSendMessage = () => {
     if (!messageVal) return
     const socket = createSocketConnection()
-    socket.emit("sendmessage", { firstName: user.firstName, userId, toUserId, text: messageVal })
-
-
+    socket.emit("sendmessage", { firstName: user.firstName, userId, toUserId, text: messageVal, photoUrl:user.photoUrl})
+    console.log("photUrl",user.photoUrl)
+    setMessageVal("")
   }
+
+  console.log("sdfasdfasdfd", messages)
 
 
 
@@ -48,15 +56,16 @@ const Chat = () => {
         <h2 className='px-3 py-1'>Chat</h2>
         <hr className='py-2 text-gray-500' />
       </div>
-      <div className='flex-1 overflow-y-scroll px-3'>
+      <div className='flex-1 overflow-y-scroll px-3 w-full'>
         {messages.map((data, index) => {
+          const isCurrentUser = user._id===data.userId
           return (
-            <div key={index} className={`chat chat-${user?._id===data.userId ? "end" : "start"} text-sm`}>
+            <div key={index} className={`chat chat-${isCurrentUser ? "end" : "start"} text-sm w-full`}>
               <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS chat bubble component"
-                    src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                    src={data.photoUrl}
                   />
                 </div>
               </div>
@@ -65,7 +74,6 @@ const Chat = () => {
                 <time className="text-xs opacity-50">12:45</time>
               </div>
               <div className="chat-bubble bg-gray-300 text-black">{data.text}</div>
-              <div className="chat-footer opacity-50">Delivered</div>
             </div>
           )
         })}

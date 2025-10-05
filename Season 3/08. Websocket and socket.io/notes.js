@@ -2,7 +2,7 @@
 
 // Websocket and socket.io
 
-1. We are goint to use https://socket.io library.
+1. We are going to use https://socket.io library.
 
 // Websockets
 1. Its a bidireactional connection.
@@ -11,7 +11,7 @@
 
 // Backend Configuration
 1. npm i socket.io
-2. first we have to create a server usinh http modules
+2. first we have to create a server using http modules
     Ex: 
     const app = express()
     const server = http.createServer(app)
@@ -34,5 +34,33 @@
     })
 
 6. These are the configuration we have to do in backend
+7. socket.on("joinChat", ({userId, toUserId})=>{})
+    a. whenever a connection made it will create a room and room can have room id and participants
+    b. anyone who joins that room can chat with each other.
+
+
+
+// UI Configuration
+1. npm i socket.io-client
+2. Create configuration file and create an socket
+    ex: 
+        import io from 'socket.io-client
+        const createSocketConnection = () =>{
+            return io(baseUrl)   // backend url    
+        }
+
+3. Connect to backend when chat page loads
+    ex:
+        useEffect(()=>{
+            const socket = createSocketConnection()
+            socket.emit('joinChat', {userId,toUserId})
+
+            // Disconnect from socket when component unmount
+            return ()=>{
+            socket.disconnect()
+            }
+        },[])
+
+
 
 */

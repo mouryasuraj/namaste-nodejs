@@ -7,11 +7,11 @@ import { BrowserRouter } from "react-router-dom";
 import appStore from "./utils/store/appStore.js";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <Provider store={appStore}>
       <BrowserRouter basename="/">
         <App />
       </BrowserRouter>
     </Provider>
-  </StrictMode>
+  // </StrictMode>
 );
