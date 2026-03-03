@@ -17,7 +17,7 @@
             }
             multiply(a,b)  
         d. These task doesn't block the code
-    2.Asynchronou
+    2.Asynchronous
         a. In Asynchronous, we can execute time consuming code easily
         b. This is a non-blocking code
         c. Ex:
@@ -44,19 +44,21 @@
  
  */
 
+const https = require("https")
+const fs = require("fs")
 
 var a = 123456;
 var b = 3456;
 
-https.get("https://api.fbi.com", (res)=>{
-    console.log(res?.secret);
+https.get("https://dummyjson.com/products/1", (res)=>{
+    console.log(res.data);
 })
 
 setTimeout(()=>{
     console.log("setTimeout");
 },5000)
 
-fs.readFile("./gossip.text", "utf8", (data)=>{
+fs.readFile("./gossip.txt", "utf8", (data)=>{
     console.log("file data", data);
 })
 
