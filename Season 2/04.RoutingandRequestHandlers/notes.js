@@ -24,7 +24,7 @@
     4xx - Client errors
     5xx - Server errors
 
-3. app.use math all the http method api
+3. app.use match all the http method api
 4. app.get means if we use http methods then it will only match that url and method also
 5. Explore more about routing and also about ?, +, * ,() and use of regex in routes
 6. Reading the query params and dynamic routes

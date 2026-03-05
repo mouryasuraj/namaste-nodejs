@@ -14,7 +14,7 @@ ex:
     case 1:
         app.use("/user", (req,res)=>{
             console.log("Request handler")
-            res.send("Hello")    // In this case, it will send the response and return from here, it will not go to execure 2nd request handler
+            res.send("Hello")    // In this case, it will send the response and return from here, it will not go to execute 2nd request handler
         },(req,res)=>{
             console.log("Request handler2")
             res.send("Hello2")
